@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CLF-C02 — Guia de Estudos</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #0A0E1A;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: #E8EAF0;
+  }
+  a { color: #6C63FF; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1A1F35 0%, #0F1628 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 24px 20px 20px;
+  }
+  .header-inner { max-width: 720px; margin: 0 auto; }
+  .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .aws-badge {
+    background: #FF9900; border-radius: 8px; padding: 6px 10px;
+    font-size: 18px; font-weight: 900; letter-spacing: -1px; color: #0A0E1A;
+  }
+  .header-label { font-size: 11px; color: #8892B0; text-transform: uppercase; letter-spacing: 2px; }
+  .header-title { font-size: 18px; font-weight: 700; color: #CCD6F6; }
+  .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .badge {
+    border-radius: 6px; padding: 6px 12px; font-size: 13px;
+  }
+  .badge-orange { background: rgba(255,153,0,0.15); border: 1px solid rgba(255,153,0,0.3); }
+  .badge-orange strong { color: #FF9900; }
+  .badge-purple { background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); }
+  .badge-purple strong { color: #6C63FF; }
+  .badge-teal { background: rgba(42,157,143,0.15); border: 1px solid rgba(42,157,143,0.3); }
+  .badge-teal strong { color: #2A9D8F; }
+
+  /* PROGRESS */
+  .progress-wrap { margin-top: 16px; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 12px; color: #8892B0; margin-bottom: 6px; }
+  .progress-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, #6C63FF, #2A9D8F);
+    border-radius: 3px; transition: width 0.3s ease; width: 0%;
+  }
+
+  /* TABS */
+  .tabs-bar {
+    background: #0F1628;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 20px;
+  }
+  .tabs-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 4px; }
+  .tab-btn {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    color: #8892B0; padding: 14px 16px; font-size: 13px; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+  }
+  .tab-btn.active { border-bottom-color: #6C63FF; color: #CCD6F6; font-weight: 600; }
+  .tab-btn:hover { color: #CCD6F6; }
+
+  /* CONTENT */
+  .content { max-width: 720px; margin: 0 auto; padding: 24px 20px; }
+  .section-label { font-size: 11px; color: #8892B0; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+  .section-desc { color: #A8B2D8; font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+
+  /* CARDS */
+  .card {
+    background: #1A1F35; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .card-fase {
+    border-left-width: 3px; border-left-style: solid;
+    border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;
+    border-color: rgba(255,255,255,0.04);
+  }
+  .fase-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .fase-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .fase-dias { margin-left: 10px; font-size: 13px; color: #8892B0; }
+  .fase-horas { font-size: 12px; color: #4A5568; background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; }
+  .fase-tema { font-size: 16px; font-weight: 600; color: #CCD6F6; margin-bottom: 6px; }
+  .fase-meta { font-size: 13px; color: #8892B0; line-height: 1.6; }
+
+  /* ALERT */
+  .alert-red {
+    margin-top: 20px; background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.3); border-radius: 10px; padding: 16px;
+  }
+  .alert-red-title { font-weight: 600; color: #E63946; margin-bottom: 8px; }
+  .alert-red ul { padding-left: 18px; color: #A8B2D8; font-size: 13px; line-height: 2; }
+  .alert-red li strong { color: #CCD6F6; }
+
+  /* DOMÍNIOS */
+  .domain-card { background: #1A1F35; border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .domain-header {
+    width: 100%; background: none; border: none; padding: 16px 18px;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; text-align: left; font-family: inherit;
+  }
+  .domain-header:hover { background: rgba(255,255,255,0.02); }
+  .domain-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-right: 8px; }
+  .domain-name { font-size: 15px; font-weight: 600; color: #CCD6F6; }
+  .domain-weight {
+    font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  }
+  .domain-arrow { color: #4A5568; font-size: 14px; margin-left: 10px; }
+  .domain-topics { border-top: 1px solid rgba(255,255,255,0.06); padding: 12px 18px 16px; display: none; }
+  .domain-topics.open { display: block; }
+  .topic-item {
+    display: flex; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer; align-items: flex-start;
+    transition: opacity 0.2s;
+  }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-item.done { opacity: 0.45; }
+  .topic-check {
+    width: 18px; height: 18px; border-radius: 4px; border: 2px solid #4A5568;
+    background: transparent; flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #0A0E1A; font-weight: 700;
+    transition: all 0.2s;
+  }
+  .topic-name { font-size: 14px; font-weight: 600; color: #CCD6F6; }
+  .topic-item.done .topic-name { text-decoration: line-through; color: #4A5568; font-weight: 400; }
+  .topic-desc { font-size: 12px; color: #6272A4; margin-top: 2px; line-height: 1.5; }
+
+  /* ARMADILHAS */
+  .trap-card {
+    background: #1A1F35; border: 1px solid rgba(230,57,70,0.2);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 12px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .trap-icon { font-size: 18px; flex-shrink: 0; }
+  .trap-title { font-size: 14px; font-weight: 700; color: #E63946; margin-bottom: 6px; }
+  .trap-desc { font-size: 13px; color: #A8B2D8; line-height: 1.7; }
+
+  /* RECURSOS */
+  .resource-card {
+    background: #1A1F35; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .resource-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .resource-name { font-size: 15px; font-weight: 600; color: #CCD6F6; }
+  .resource-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 700;
+  }
+  .tag-essencial { background: rgba(42,157,143,0.2); color: #2A9D8F; }
+  .tag-recomendado { background: rgba(244,162,97,0.2); color: #F4A261; }
+  .tag-opcional { background: rgba(108,99,255,0.2); color: #6C63FF; }
+  .tag-tipo { background: rgba(255,255,255,0.06); color: #8892B0; font-weight: 400; }
+  .resource-desc { font-size: 13px; color: #8892B0; margin-bottom: 10px; }
+
+  .method-box {
+    margin-top: 20px;
+    background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(42,157,143,0.1));
+    border: 1px solid rgba(108,99,255,0.3); border-radius: 10px; padding: 16px;
+  }
+  .method-title { font-weight: 700; color: #CCD6F6; margin-bottom: 10px; }
+  .method-box ol { padding-left: 18px; color: #A8B2D8; font-size: 13px; line-height: 2.2; }
+  .method-box li strong { color: #CCD6F6; }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="aws-badge">AWS</div>
+      <div>
+        <div class="header-label">Guia de Estudos</div>
+        <div class="header-title">Cloud Practitioner CLF-C02</div>
+      </div>
+    </div>
+    <div class="badges">
+      <div class="badge badge-orange">🗓️ Prova: <strong>27 de Junho, 2026</strong></div>
+      <div class="badge badge-purple">⏱️ <strong>19 dias</strong> disponíveis</div>
+      <div class="badge badge-teal">🎯 Meta: <strong>≥ 700 / 1000</strong> para passar</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-labels">
+        <span>Tópicos estudados</span>
+        <span id="progress-text">0/22 (0%)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('cronograma', this)">📅 Plano</button>
+    <button class="tab-btn" onclick="switchTab('dominios', this)">📚 Domínios</button>
+    <button class="tab-btn" onclick="switchTab('armadilhas', this)">⚠️ Pegadinhas</button>
+    <button class="tab-btn" onclick="switchTab('recursos', this)">🔗 Recursos</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- CRONOGRAMA -->
+  <div class="tab-panel active" id="tab-cronograma">
+    <div class="section-label">Estratégia realista</div>
+    <p class="section-desc">
+      Com 1-2h/dia e base básica, você tem tempo suficiente para passar no CLF-C02 — mas
+      <strong style="color:#FF6B35">não dá pra estudar tudo com profundidade</strong>.
+      O plano abaixo prioriza peso por domínio na prova real.
+    </p>
+
+    <div class="card card-fase" style="border-left-color:#FF6B35; border-color: rgba(255,107,53,0.15)">
+      <div class="fase-header">
+        <div><span class="fase-tag" style="color:#FF6B35">FASE 1</span><span class="fase-dias">Dias 1-4</span></div>
+        <span class="fase-horas">6–8h no total</span>
+      </div>
+      <div class="fase-tema">Cloud Concepts</div>
+      <div class="fase-meta">Entender os fundamentos: modelos de serviço, responsabilidade compartilhada, Well-Architected</div>
+    </div>
+
+    <div class="card card-fase" style="border-left-color:#E63946; border-color: rgba(230,57,70,0.15)">
+      <div class="fase-header">
+        <div><span class="fase-tag" style="color:#E63946">FASE 2</span><span class="fase-dias">Dias 5-10</span></div>
+        <span class="fase-horas">10–12h no total</span>
+      </div>
+      <div class="fase-tema">Security & Compliance</div>
+      <div class="fase-meta">Dominar IAM completamente + serviços de segurança (domínio mais cobrado junto com tecnologia)</div>
+    </div>
+
+    <div class="card card-fase" style="border-left-color:#2A9D8F; border-color: rgba(42,157,143,0.15)">
+      <div class="fase-header">
+        <div><span class="fase-tag" style="color:#2A9D8F">FASE 3</span><span class="fase-dias">Dias 11-16</span></div>
+        <span class="fase-horas">10–12h no total</span>
+      </div>
+      <div class="fase-tema">Technology & Services</div>
+      <div class="fase-meta">Visão geral dos principais serviços — foco em saber QUANDO usar cada um, não detalhes técnicos</div>
+    </div>
+
+    <div class="card card-fase" style="border-left-color:#F4A261; border-color: rgba(244,162,97,0.15)">
+      <div class="fase-header">
+        <div><span class="fase-tag" style="color:#F4A261">FASE 4</span><span class="fase-dias">Dias 17-18</span></div>
+        <span class="fase-horas">3–4h no total</span>
+      </div>
+      <div class="fase-tema">Billing & Pricing</div>
+      <div class="fase-meta">Modelos de preço, ferramentas, Support Plans — conteúdo mais objetivo e fácil de decorar</div>
+    </div>
+
+    <div class="card card-fase" style="border-left-color:#6C63FF; border-color: rgba(108,99,255,0.15)">
+      <div class="fase-header">
+        <div><span class="fase-tag" style="color:#6C63FF">REVISÃO</span><span class="fase-dias">Dia 19</span></div>
+        <span class="fase-horas">2h</span>
+      </div>
+      <div class="fase-tema">Simulado Final + Revisão</div>
+      <div class="fase-meta">Fazer simulado completo (65 questões), revisar erros, descansar a cabeça</div>
+    </div>
+
+    <div class="alert-red">
+      <div class="alert-red-title">⚡ Prioridades absolutas (não pule isso)</div>
+      <ul>
+        <li><strong>IAM</strong> — aparece em 40%+ das questões de forma direta ou indireta</li>
+        <li><strong>Modelo de responsabilidade compartilhada</strong> — questão quase certa na prova</li>
+        <li><strong>Diferença entre serviços similares</strong> — S3 vs EBS vs EFS, RDS vs DynamoDB, SQS vs SNS</li>
+        <li><strong>Simulados a partir do dia 10</strong> — não deixe pra última hora</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DOMÍNIOS -->
+  <div class="tab-panel" id="tab-dominios">
+    <div class="section-label">4 domínios oficiais</div>
+    <p class="section-desc">Marque os tópicos conforme for estudando para acompanhar seu progresso.</p>
+
+    <!-- Domínio 1 -->
+    <div class="domain-card" style="border: 1px solid rgba(255,107,53,0.15)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div>
+          <span class="domain-num" style="color:#FF6B35">Domínio 1</span>
+          <span class="domain-name">Cloud Concepts</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="domain-weight" style="background:rgba(255,107,53,0.15);color:#FF6B35">24%</span>
+          <span class="domain-arrow">▼</span>
+        </div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item" onclick="toggleTopic(this,'#FF6B35')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Benefícios da nuvem AWS</div><div class="topic-desc">Alta disponibilidade, elasticidade, agilidade, pay-as-you-go</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#FF6B35')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Modelo de responsabilidade compartilhada</div><div class="topic-desc">AWS cuida DA nuvem, você cuida NA nuvem</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#FF6B35')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Modelos de implantação</div><div class="topic-desc">Public, Private, Hybrid cloud</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#FF6B35')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Modelos de serviço</div><div class="topic-desc">IaaS, PaaS, SaaS — exemplos práticos</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#FF6B35')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Well-Architected Framework</div><div class="topic-desc">6 pilares: Excelência Operacional, Segurança, Confiabilidade, Eficiência, Custo, Sustentabilidade</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domínio 2 -->
+    <div class="domain-card" style="border: 1px solid rgba(230,57,70,0.15)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div>
+          <span class="domain-num" style="color:#E63946">Domínio 2</span>
+          <span class="domain-name">Security & Compliance</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="domain-weight" style="background:rgba(230,57,70,0.15);color:#E63946">30%</span>
+          <span class="domain-arrow">▼</span>
+        </div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item" onclick="toggleTopic(this,'#E63946')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">IAM (Identity & Access Management)</div><div class="topic-desc">Users, Groups, Roles, Policies — conceito de least privilege</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#E63946')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">AWS Organizations & SCPs</div><div class="topic-desc">Gerenciamento de múltiplas contas, Service Control Policies</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#E63946')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Serviços de segurança</div><div class="topic-desc">Shield, WAF, GuardDuty, Inspector, Macie, Security Hub</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#E63946')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Conformidade e governança</div><div class="topic-desc">AWS Artifact, Compliance Programs, Config, CloudTrail</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#E63946')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Criptografia</div><div class="topic-desc">KMS, ACM, data at-rest vs in-transit</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domínio 3 -->
+    <div class="domain-card" style="border: 1px solid rgba(42,157,143,0.15)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div>
+          <span class="domain-num" style="color:#2A9D8F">Domínio 3</span>
+          <span class="domain-name">Cloud Technology & Services</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="domain-weight" style="background:rgba(42,157,143,0.15);color:#2A9D8F">34%</span>
+          <span class="domain-arrow">▼</span>
+        </div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Computação</div><div class="topic-desc">EC2, Lambda, ECS, EKS, Elastic Beanstalk, Lightsail</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Storage</div><div class="topic-desc">S3 (classes de armazenamento), EBS, EFS, Glacier, Storage Gateway</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Banco de dados</div><div class="topic-desc">RDS, Aurora, DynamoDB, ElastiCache, Redshift</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Rede</div><div class="topic-desc">VPC, Subnets, Route 53, CloudFront, Direct Connect, VPN</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Analytics & Machine Learning</div><div class="topic-desc">Athena, Glue, SageMaker, Rekognition, Comprehend, Lex</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Integração de aplicações</div><div class="topic-desc">SQS, SNS, EventBridge, Step Functions</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#2A9D8F')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Management & Governance</div><div class="topic-desc">CloudWatch, CloudTrail, CloudFormation, Systems Manager, Trusted Advisor</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domínio 4 -->
+    <div class="domain-card" style="border: 1px solid rgba(244,162,97,0.15)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div>
+          <span class="domain-num" style="color:#F4A261">Domínio 4</span>
+          <span class="domain-name">Billing & Pricing</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="domain-weight" style="background:rgba(244,162,97,0.15);color:#F4A261">12%</span>
+          <span class="domain-arrow">▼</span>
+        </div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item" onclick="toggleTopic(this,'#F4A261')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Modelos de preço</div><div class="topic-desc">On-Demand, Reserved, Spot, Savings Plans, Dedicated Hosts</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#F4A261')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Ferramentas de billing</div><div class="topic-desc">Cost Explorer, Budgets, Cost & Usage Report, Pricing Calculator</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#F4A261')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Support Plans</div><div class="topic-desc">Basic, Developer, Business, Enterprise On-Ramp, Enterprise</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#F4A261')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Free Tier</div><div class="topic-desc">Always free, 12 meses, trials — o que está incluso</div></div>
+        </div>
+        <div class="topic-item" onclick="toggleTopic(this,'#F4A261')">
+          <div class="topic-check"></div>
+          <div><div class="topic-name">Cobrança consolidada</div><div class="topic-desc">Organizations para consolidar faturas e obter descontos por volume</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARMADILHAS -->
+  <div class="tab-panel" id="tab-armadilhas">
+    <div class="section-label">Erros mais comuns na prova</div>
+    <p class="section-desc">Pegadinhas clássicas que derrubam quem estudou mas não prestou atenção nos detalhes.</p>
+
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">"Responsabilidade compartilhada" tem pegadinhas</div>
+        <div class="trap-desc">A AWS gerencia o hardware físico, hypervisor e infraestrutura. VOCÊ gerencia SO, patches, dados, IAM, configuração de rede dentro da VPC. Borda cinza: RDS — AWS gerencia o SO e patches do banco; você gerencia dados e acesso.</div>
+      </div>
+    </div>
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">IAM Roles ≠ IAM Users</div>
+        <div class="trap-desc">User tem credenciais permanentes. Role é assumida temporariamente (ex: EC2 acessa S3 via role, não via usuário). Na prova aparecem cenários de "qual é a forma correta" — sempre prefira roles para serviços.</div>
+      </div>
+    </div>
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">S3 não é sistema de arquivos</div>
+        <div class="trap-desc">S3 é object storage. EBS é block storage (disco de VM). EFS é file system compartilhado (NFS). Confundir esses três é erro clássico.</div>
+      </div>
+    </div>
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">High Availability ≠ Fault Tolerance</div>
+        <div class="trap-desc">HA = minimize downtime (pode ter breve interrupção). FT = zero downtime (continua operando mesmo com falha). Multi-AZ = HA. Active-Active multi-região = FT.</div>
+      </div>
+    </div>
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">CloudWatch vs CloudTrail</div>
+        <div class="trap-desc">CloudWatch = monitoramento de MÉTRICAS e LOGS (CPU, memória, alarmes). CloudTrail = AUDITORIA de chamadas de API (quem fez o quê, quando). Pergunta "quem deletou o bucket?" = CloudTrail.</div>
+      </div>
+    </div>
+    <div class="trap-card">
+      <span class="trap-icon">⚠️</span>
+      <div>
+        <div class="trap-title">Reserved Instances vs Savings Plans</div>
+        <div class="trap-desc">Reserved = compromisso com instância específica. Savings Plans = compromisso com gasto em dólar/hora (mais flexível). Ambos dão desconto, mas Savings Plans é mais moderno.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECURSOS -->
+  <div class="tab-panel" id="tab-recursos">
+    <div class="section-label">Onde estudar</div>
+    <p class="section-desc">Foco no essencial. Não tente usar 10 fontes diferentes — vai dispersar.</p>
+
+    <div class="resource-card">
+      <div class="resource-header">
+        <div class="resource-name">AWS Skill Builder</div>
+        <div class="resource-tags">
+          <span class="tag tag-essencial">ESSENCIAL</span>
+          <span class="tag tag-tipo">Gratuito</span>
+        </div>
+      </div>
+      <div class="resource-desc">Curso oficial gratuito: "AWS Cloud Practitioner Essentials" (6h)</div>
+      <a href="https://explore.skillbuilder.aws" target="_blank">🔗 explore.skillbuilder.aws</a>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-header">
+        <div class="resource-name">Simulados ExamTopics</div>
+        <div class="resource-tags">
+          <span class="tag tag-essencial">ESSENCIAL</span>
+          <span class="tag tag-tipo">Gratuito</span>
+        </div>
+      </div>
+      <div class="resource-desc">Banco de questões reais de provas anteriores com discussões</div>
+      <a href="https://www.examtopics.com/exams/amazon/clf-c02/" target="_blank">🔗 examtopics.com/exams/amazon/clf-c02/</a>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-header">
+        <div class="resource-name">AWS Free Tier</div>
+        <div class="resource-tags">
+          <span class="tag tag-recomendado">RECOMENDADO</span>
+          <span class="tag tag-tipo">Gratuito</span>
+        </div>
+      </div>
+      <div class="resource-desc">Crie uma conta e PRATIQUE — ver o console é diferente de ler sobre ele</div>
+      <a href="https://aws.amazon.com/free/" target="_blank">🔗 aws.amazon.com/free/</a>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-header">
+        <div class="resource-name">Whizlabs / Udemy (simulados)</div>
+        <div class="resource-tags">
+          <span class="tag tag-opcional">OPCIONAL</span>
+          <span class="tag tag-tipo">Pago (~R$30)</span>
+        </div>
+      </div>
+      <div class="resource-desc">Pacotes de simulados pagos — 6 simulados completos de 65 questões</div>
+      <a href="https://www.udemy.com" target="_blank">🔗 udemy.com</a>
+    </div>
+
+    <div class="method-box">
+      <div class="method-title">💡 Método de estudo recomendado</div>
+      <ol>
+        <li>Leia o tópico no Skill Builder (30-40 min)</li>
+        <li>Faça <strong>anotações com suas próprias palavras</strong> — não copie</li>
+        <li>Responda 10 questões do ExamTopics sobre o tema do dia</li>
+        <li>Revise os erros e entenda <em>por que</em> a resposta certa é certa</li>
+        <li>A partir do dia 10: 1 simulado completo de 65 questões a cada 2 dias</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL_TOPICS = 22;
+  let checkedCount = 0;
+
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleDomain(btn) {
+    const topics = btn.nextElementSibling;
+    const arrow = btn.querySelector('.domain-arrow');
+    const isOpen = topics.classList.contains('open');
+    topics.classList.toggle('open');
+    arrow.textContent = isOpen ? '▼' : '▲';
+  }
+
+  function toggleTopic(el, color) {
+    const isDone = el.classList.contains('done');
+    const check = el.querySelector('.topic-check');
+    if (isDone) {
+      el.classList.remove('done');
+      check.style.background = 'transparent';
+      check.style.borderColor = '#4A5568';
+      check.textContent = '';
+      checkedCount--;
+    } else {
+      el.classList.add('done');
+      check.style.background = color;
+      check.style.borderColor = color;
+      check.textContent = '✓';
+      checkedCount++;
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = Math.round((checkedCount / TOTAL_TOPICS) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = checkedCount + '/' + TOTAL_TOPICS + ' (' + pct + '%)';
+  }
+</script>
+</body>
+</html>
