@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CLF-C02 — Guia de Estudos</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #0A0E1A; font-family: 'Segoe UI', system-ui, sans-serif; color: #E8EAF0; }
+  a { color: #6C63FF; text-decoration: none; }
+
+  .header { background: linear-gradient(135deg, #1A1F35 0%, #0F1628 100%); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 20px 20px; }
+  .header-inner { max-width: 720px; margin: 0 auto; }
+  .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .aws-badge { background: #FF9900; border-radius: 8px; padding: 6px 10px; font-size: 18px; font-weight: 900; letter-spacing: -1px; color: #0A0E1A; }
+  .header-label { font-size: 11px; color: #8892B0; text-transform: uppercase; letter-spacing: 2px; }
+  .header-title { font-size: 18px; font-weight: 700; color: #CCD6F6; }
+  .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .badge { border-radius: 6px; padding: 6px 12px; font-size: 13px; }
+  .badge-orange { background: rgba(255,153,0,0.15); border: 1px solid rgba(255,153,0,0.3); }
+  .badge-orange strong { color: #FF9900; }
+  .badge-purple { background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); }
+  .badge-purple strong { color: #6C63FF; }
+  .badge-teal { background: rgba(42,157,143,0.15); border: 1px solid rgba(42,157,143,0.3); }
+  .badge-teal strong { color: #2A9D8F; }
+  .progress-wrap { margin-top: 16px; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 12px; color: #8892B0; margin-bottom: 6px; }
+  .progress-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #6C63FF, #2A9D8F); border-radius: 3px; transition: width 0.3s ease; width: 0%; }
+
+  .tabs-bar { background: #0F1628; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 20px; }
+  .tabs-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 4px; }
+  .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; color: #8892B0; padding: 14px 16px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .tab-btn.active { border-bottom-color: #6C63FF; color: #CCD6F6; font-weight: 600; }
+  .tab-btn:hover { color: #CCD6F6; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 24px 20px; }
+  .section-label { font-size: 11px; color: #8892B0; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+  .section-desc { color: #A8B2D8; font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .card { background: #1A1F35; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .card-fase { border-left-width: 3px; border-left-style: solid; border-top: 1px solid rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .fase-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .fase-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .fase-dias { margin-left: 10px; font-size: 13px; color: #8892B0; }
+  .fase-horas { font-size: 12px; color: #4A5568; background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; }
+  .fase-tema { font-size: 16px; font-weight: 600; color: #CCD6F6; margin-bottom: 6px; }
+  .fase-meta { font-size: 13px; color: #8892B0; line-height: 1.6; }
+  .alert-red { margin-top: 20px; background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3); border-radius: 10px; padding: 16px; }
+  .alert-red-title { font-weight: 600; color: #E63946; margin-bottom: 8px; }
+  .alert-red ul { padding-left: 18px; color: #A8B2D8; font-size: 13px; line-height: 2; }
+  .alert-red li strong { color: #CCD6F6; }
+
+  .domain-card { background: #1A1F35; border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .domain-header { width: 100%; background: none; border: none; padding: 16px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; font-family: inherit; }
+  .domain-header:hover { background: rgba(255,255,255,0.02); }
+  .domain-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-right: 8px; }
+  .domain-name { font-size: 15px; font-weight: 600; color: #CCD6F6; }
+  .domain-weight { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .domain-arrow { color: #4A5568; font-size: 14px; margin-left: 10px; }
+  .domain-topics { border-top: 1px solid rgba(255,255,255,0.06); padding: 12px 18px 16px; display: none; }
+  .domain-topics.open { display: block; }
+
+  .topic-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: flex-start; }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-item.done { opacity: 0.45; }
+  .topic-check { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #4A5568; background: transparent; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #0A0E1A; font-weight: 700; transition: all 0.2s; cursor: pointer; }
+  .topic-content { flex: 1; cursor: pointer; }
+  .topic-content:hover .topic-name { color: #A78BFA; }
+  .topic-name { font-size: 14px; font-weight: 600; color: #CCD6F6; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+  .topic-item.done .topic-name { text-decoration: line-through; color: #4A5568; font-weight: 400; }
+  .topic-desc { font-size: 12px; color: #6272A4; margin-top: 2px; line-height: 1.5; }
+  .topic-link-icon { font-size: 11px; color: #6C63FF; background: rgba(108,99,255,0.15); padding: 2px 6px; border-radius: 4px; font-weight: 600; white-space: nowrap; }
+
+  .trap-card { background: #1A1F35; border: 1px solid rgba(230,57,70,0.2); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; }
+  .trap-icon { font-size: 18px; flex-shrink: 0; }
+  .trap-title { font-size: 14px; font-weight: 700; color: #E63946; margin-bottom: 6px; }
+  .trap-desc { font-size: 13px; color: #A8B2D8; line-height: 1.7; }
+
+  .resource-card { background: #1A1F35; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .resource-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .resource-name { font-size: 15px; font-weight: 600; color: #CCD6F6; }
+  .resource-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
+  .tag-essencial { background: rgba(42,157,143,0.2); color: #2A9D8F; }
+  .tag-recomendado { background: rgba(244,162,97,0.2); color: #F4A261; }
+  .tag-opcional { background: rgba(108,99,255,0.2); color: #6C63FF; }
+  .tag-tipo { background: rgba(255,255,255,0.06); color: #8892B0; font-weight: 400; }
+  .resource-desc { font-size: 13px; color: #8892B0; margin-bottom: 10px; }
+  .method-box { margin-top: 20px; background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(42,157,143,0.1)); border: 1px solid rgba(108,99,255,0.3); border-radius: 10px; padding: 16px; }
+  .method-title { font-weight: 700; color: #CCD6F6; margin-bottom: 10px; }
+  .method-box ol { padding-left: 18px; color: #A8B2D8; font-size: 13px; line-height: 2.2; }
+  .method-box li strong { color: #CCD6F6; }
+
+  /* SIMULADO */
+  .sim-intro { background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(42,157,143,0.08)); border: 1px solid rgba(108,99,255,0.3); border-radius: 12px; padding: 24px; text-align: center; }
+  .sim-intro h2 { font-size: 22px; color: #CCD6F6; margin-bottom: 8px; }
+  .sim-intro p { font-size: 14px; color: #A8B2D8; line-height: 1.7; margin-bottom: 6px; }
+  .sim-specs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 18px 0; }
+  .sim-spec { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 16px; font-size: 13px; color: #CCD6F6; }
+  .sim-spec strong { color: #6C63FF; display: block; font-size: 18px; margin-bottom: 2px; }
+  .sim-btn { background: linear-gradient(135deg, #6C63FF, #2A9D8F); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s; }
+  .sim-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.4); }
+  .sim-btn-secondary { background: rgba(255,255,255,0.08); margin-left: 10px; }
+  .sim-last-score { margin-top: 16px; font-size: 13px; color: #8892B0; }
+  .sim-last-score strong { color: #2A9D8F; }
+
+  .sim-topbar { position: sticky; top: 0; background: #0F1628; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; z-index: 5; }
+  .sim-counter { font-size: 14px; color: #CCD6F6; font-weight: 600; }
+  .sim-timer { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 4px 14px; border-radius: 8px; background: rgba(108,99,255,0.15); color: #6C63FF; }
+  .sim-timer.warning { background: rgba(244,162,97,0.15); color: #F4A261; }
+  .sim-timer.danger { background: rgba(230,57,70,0.15); color: #E63946; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+  .sim-progress-bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+  .sim-progress-fill { height: 100%; background: linear-gradient(90deg,#6C63FF,#2A9D8F); width: 0%; transition: width 0.3s; }
+
+  .sim-question { background: #1A1F35; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px; margin-bottom: 16px; }
+  .sim-q-domain { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .sim-q-text { font-size: 15px; color: #CCD6F6; line-height: 1.7; margin-bottom: 18px; font-weight: 500; }
+  .sim-option { display: block; width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 16px; text-align: left; color: #A8B2D8; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; margin-bottom: 8px; }
+  .sim-option:hover { background: rgba(108,99,255,0.12); border-color: rgba(108,99,255,0.4); }
+  .sim-option.selected { background: rgba(108,99,255,0.2); border-color: #6C63FF; color: #CCD6F6; }
+  .sim-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+  .sim-nav-btn { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: #CCD6F6; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .sim-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+  .sim-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .sim-nav-btn.finish { background: linear-gradient(135deg,#2A9D8F,#6C63FF); border: none; }
+
+  .sim-result { text-align: center; padding: 20px 0; }
+  .sim-score-circle { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 8px solid; }
+  .sim-score-circle.pass { border-color: #2A9D8F; background: rgba(42,157,143,0.1); }
+  .sim-score-circle.fail { border-color: #E63946; background: rgba(230,57,70,0.1); }
+  .sim-score-num { font-size: 42px; font-weight: 800; color: #CCD6F6; }
+  .sim-score-label { font-size: 12px; color: #8892B0; text-transform: uppercase; letter-spacing: 1px; }
+  .sim-verdict { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .sim-verdict.pass { color: #2A9D8F; }
+  .sim-verdict.fail { color: #E63946; }
+  .sim-result-detail { font-size: 14px; color: #A8B2D8; margin-bottom: 24px; line-height: 1.7; }
+  .sim-review-item { background: #1A1F35; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; margin-bottom: 12px; text-align: left; }
+  .sim-review-q { font-size: 14px; color: #CCD6F6; font-weight: 500; margin-bottom: 10px; }
+  .sim-review-ans { font-size: 13px; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; }
+  .sim-review-ans.your-wrong { background: rgba(230,57,70,0.12); color: #E8A0A8; }
+  .sim-review-ans.your-right { background: rgba(42,157,143,0.12); color: #9FD9CF; }
+  .sim-review-ans.correct-ans { background: rgba(42,157,143,0.12); color: #9FD9CF; }
+  .sim-review-exp { font-size: 12px; color: #8892B0; line-height: 1.6; margin-top: 6px; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #141824; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; position: relative; animation: slideUp 0.25s ease; }
+  @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+  .modal-header { padding: 20px 24px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: #141824; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; }
+  .modal-domain-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .modal-title { font-size: 20px; font-weight: 700; color: #CCD6F6; }
+  .modal-close { background: rgba(255,255,255,0.08); border: none; color: #8892B0; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 12px; }
+  .modal-close:hover { background: rgba(255,255,255,0.15); color: #CCD6F6; }
+  .modal-body { padding: 20px 24px 28px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6C63FF; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .modal-section-title::after { content:''; flex:1; height:1px; background: rgba(108,99,255,0.2); }
+  .modal-text { font-size: 14px; color: #A8B2D8; line-height: 1.8; }
+  .modal-text strong { color: #CCD6F6; }
+  .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .term-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 10px 12px; }
+  .term-name { font-size: 12px; font-weight: 700; color: #CCD6F6; margin-bottom: 4px; }
+  .term-desc { font-size: 12px; color: #6272A4; line-height: 1.5; }
+  .tip-box { background: rgba(42,157,143,0.1); border: 1px solid rgba(42,157,143,0.25); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .tip-box-title { font-size: 12px; font-weight: 700; color: #2A9D8F; margin-bottom: 4px; }
+  .tip-box-text { font-size: 13px; color: #A8B2D8; line-height: 1.6; }
+  .question-card { background: #1A1F35; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .question-text { font-size: 14px; color: #CCD6F6; font-weight: 500; line-height: 1.6; margin-bottom: 14px; }
+  .options-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .option-btn { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px; text-align: left; color: #A8B2D8; font-size: 13px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .option-btn:hover { background: rgba(108,99,255,0.15); border-color: rgba(108,99,255,0.4); color: #CCD6F6; }
+  .option-btn.correct { background: rgba(42,157,143,0.2); border-color: #2A9D8F; color: #CCD6F6; }
+  .option-btn.wrong { background: rgba(230,57,70,0.15); border-color: #E63946; color: #CCD6F6; }
+  .option-btn:disabled { cursor: default; }
+  .explanation { display: none; background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #A8B2D8; line-height: 1.6; }
+  .explanation.show { display: block; }
+  .explanation strong { color: #CCD6F6; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="aws-badge">AWS</div>
+      <div>
+        <div class="header-label">Guia de Estudos</div>
+        <div class="header-title">Cloud Practitioner CLF-C02</div>
+      </div>
+    </div>
+    <div class="badges">
+      <div class="badge badge-orange">🗓️ Prova: <strong>27 de Junho, 2026</strong></div>
+      <div class="badge badge-purple">⏱️ <strong>19 dias</strong> disponíveis</div>
+      <div class="badge badge-teal">🎯 Meta: <strong>≥ 700 / 1000</strong> para passar</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-labels">
+        <span>Tópicos estudados</span>
+        <span id="progress-text">0/22 (0%)</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('cronograma',this)">📅 Plano</button>
+    <button class="tab-btn" onclick="switchTab('dominios',this)">📚 Domínios</button>
+    <button class="tab-btn" onclick="switchTab('simulado',this)">🎯 Simulado</button>
+    <button class="tab-btn" onclick="switchTab('armadilhas',this)">⚠️ Pegadinhas</button>
+    <button class="tab-btn" onclick="switchTab('recursos',this)">🔗 Recursos</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- CRONOGRAMA -->
+  <div class="tab-panel active" id="tab-cronograma">
+    <div class="section-label">Estratégia realista</div>
+    <p class="section-desc">Com 1-2h/dia e base básica, você tem tempo suficiente para passar no CLF-C02 — mas <strong style="color:#FF6B35">não dá pra estudar tudo com profundidade</strong>. O plano abaixo prioriza peso por domínio.</p>
+    <div class="card card-fase" style="border-left-color:#FF6B35">
+      <div class="fase-header"><div><span class="fase-tag" style="color:#FF6B35">FASE 1</span><span class="fase-dias">Dias 1-4</span></div><span class="fase-horas">6–8h no total</span></div>
+      <div class="fase-tema">Cloud Concepts</div>
+      <div class="fase-meta">Fundamentos: modelos de serviço, responsabilidade compartilhada, Well-Architected</div>
+    </div>
+    <div class="card card-fase" style="border-left-color:#E63946">
+      <div class="fase-header"><div><span class="fase-tag" style="color:#E63946">FASE 2</span><span class="fase-dias">Dias 5-10</span></div><span class="fase-horas">10–12h no total</span></div>
+      <div class="fase-tema">Security & Compliance</div>
+      <div class="fase-meta">IAM completamente + serviços de segurança (domínio mais cobrado junto com tecnologia)</div>
+    </div>
+    <div class="card card-fase" style="border-left-color:#2A9D8F">
+      <div class="fase-header"><div><span class="fase-tag" style="color:#2A9D8F">FASE 3</span><span class="fase-dias">Dias 11-16</span></div><span class="fase-horas">10–12h no total</span></div>
+      <div class="fase-tema">Technology & Services</div>
+      <div class="fase-meta">Visão geral dos principais serviços — foco em QUANDO usar cada um, não detalhes técnicos</div>
+    </div>
+    <div class="card card-fase" style="border-left-color:#F4A261">
+      <div class="fase-header"><div><span class="fase-tag" style="color:#F4A261">FASE 4</span><span class="fase-dias">Dias 17-18</span></div><span class="fase-horas">3–4h no total</span></div>
+      <div class="fase-tema">Billing & Pricing</div>
+      <div class="fase-meta">Modelos de preço, ferramentas, Support Plans — conteúdo objetivo e fácil de decorar</div>
+    </div>
+    <div class="card card-fase" style="border-left-color:#6C63FF">
+      <div class="fase-header"><div><span class="fase-tag" style="color:#6C63FF">REVISÃO</span><span class="fase-dias">Dia 19</span></div><span class="fase-horas">2h</span></div>
+      <div class="fase-tema">Simulado Final + Revisão</div>
+      <div class="fase-meta">Simulado completo (65 questões), revisar erros, descansar a cabeça</div>
+    </div>
+    <div class="alert-red">
+      <div class="alert-red-title">⚡ Prioridades absolutas</div>
+      <ul>
+        <li><strong>IAM</strong> — aparece em 40%+ das questões direta ou indiretamente</li>
+        <li><strong>Responsabilidade compartilhada</strong> — questão quase certa na prova</li>
+        <li><strong>Diferença entre serviços similares</strong> — S3 vs EBS vs EFS, RDS vs DynamoDB, SQS vs SNS</li>
+        <li><strong>Simulados a partir do dia 10</strong> — não deixe pra última hora</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DOMÍNIOS -->
+  <div class="tab-panel" id="tab-dominios">
+    <div class="section-label">4 domínios oficiais</div>
+    <p class="section-desc">Clique no nome do tópico para abrir o conteúdo completo. Clique no checkbox para marcar como estudado.</p>
+
+    <!-- DOMÍNIO 1 -->
+    <div class="domain-card" style="border:1px solid rgba(255,107,53,0.2)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div><span class="domain-num" style="color:#FF6B35">Domínio 1</span><span class="domain-name">Cloud Concepts</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="domain-weight" style="background:rgba(255,107,53,0.15);color:#FF6B35">24%</span><span class="domain-arrow">▼</span></div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#FF6B35')"></div>
+          <div class="topic-content" onclick="openModal('beneficios')">
+            <div class="topic-name">Benefícios da nuvem AWS <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Alta disponibilidade, elasticidade, agilidade, pay-as-you-go</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#FF6B35')"></div>
+          <div class="topic-content" onclick="openModal('responsabilidade')">
+            <div class="topic-name">Modelo de responsabilidade compartilhada <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">AWS cuida DA nuvem, você cuida NA nuvem</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#FF6B35')"></div>
+          <div class="topic-content" onclick="openModal('implantacao')">
+            <div class="topic-name">Modelos de implantação <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Public, Private, Hybrid cloud</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#FF6B35')"></div>
+          <div class="topic-content" onclick="openModal('servico')">
+            <div class="topic-name">Modelos de serviço <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">IaaS, PaaS, SaaS — exemplos práticos</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#FF6B35')"></div>
+          <div class="topic-content" onclick="openModal('wellarchitected')">
+            <div class="topic-name">Well-Architected Framework <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">6 pilares: Excelência Operacional, Segurança, Confiabilidade, Eficiência, Custo, Sustentabilidade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOMÍNIO 2 -->
+    <div class="domain-card" style="border:1px solid rgba(230,57,70,0.2)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div><span class="domain-num" style="color:#E63946">Domínio 2</span><span class="domain-name">Security & Compliance</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="domain-weight" style="background:rgba(230,57,70,0.15);color:#E63946">30%</span><span class="domain-arrow">▼</span></div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#E63946')"></div>
+          <div class="topic-content" onclick="openModal('iam')">
+            <div class="topic-name">IAM — Identity & Access Management <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Users, Groups, Roles, Policies — least privilege</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#E63946')"></div>
+          <div class="topic-content" onclick="openModal('organizations')">
+            <div class="topic-name">AWS Organizations & SCPs <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Gerenciamento de múltiplas contas, Service Control Policies</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#E63946')"></div>
+          <div class="topic-content" onclick="openModal('seguranca')">
+            <div class="topic-name">Serviços de segurança <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Shield, WAF, GuardDuty, Inspector, Macie, Security Hub</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#E63946')"></div>
+          <div class="topic-content" onclick="openModal('conformidade')">
+            <div class="topic-name">Conformidade e governança <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">AWS Artifact, Config, CloudTrail, Compliance Programs</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#E63946')"></div>
+          <div class="topic-content" onclick="openModal('criptografia')">
+            <div class="topic-name">Criptografia <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">KMS, ACM, data at-rest vs in-transit</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOMÍNIO 3 -->
+    <div class="domain-card" style="border:1px solid rgba(42,157,143,0.2)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div><span class="domain-num" style="color:#2A9D8F">Domínio 3</span><span class="domain-name">Cloud Technology & Services</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="domain-weight" style="background:rgba(42,157,143,0.15);color:#2A9D8F">34%</span><span class="domain-arrow">▼</span></div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('computacao')">
+            <div class="topic-name">Computação <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">EC2, Lambda, ECS, EKS, Elastic Beanstalk, Lightsail</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('storage')">
+            <div class="topic-name">Storage <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">S3, EBS, EFS, Glacier, Storage Gateway</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('database')">
+            <div class="topic-name">Banco de dados <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">RDS, Aurora, DynamoDB, ElastiCache, Redshift</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('rede')">
+            <div class="topic-name">Rede <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">VPC, Subnets, Route 53, CloudFront, Direct Connect, VPN</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('analytics')">
+            <div class="topic-name">Analytics & Machine Learning <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Athena, Glue, SageMaker, Rekognition, Comprehend, Lex</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('integracao')">
+            <div class="topic-name">Integração de aplicações <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">SQS, SNS, EventBridge, Step Functions</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#2A9D8F')"></div>
+          <div class="topic-content" onclick="openModal('management')">
+            <div class="topic-name">Management & Governance <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">CloudWatch, CloudTrail, CloudFormation, Systems Manager, Trusted Advisor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOMÍNIO 4 -->
+    <div class="domain-card" style="border:1px solid rgba(244,162,97,0.2)">
+      <button class="domain-header" onclick="toggleDomain(this)">
+        <div><span class="domain-num" style="color:#F4A261">Domínio 4</span><span class="domain-name">Billing & Pricing</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="domain-weight" style="background:rgba(244,162,97,0.15);color:#F4A261">12%</span><span class="domain-arrow">▼</span></div>
+      </button>
+      <div class="domain-topics">
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#F4A261')"></div>
+          <div class="topic-content" onclick="openModal('precos')">
+            <div class="topic-name">Modelos de preço <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">On-Demand, Reserved, Spot, Savings Plans, Dedicated Hosts</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#F4A261')"></div>
+          <div class="topic-content" onclick="openModal('billing')">
+            <div class="topic-name">Ferramentas de billing <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Cost Explorer, Budgets, Cost & Usage Report, Pricing Calculator</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#F4A261')"></div>
+          <div class="topic-content" onclick="openModal('support')">
+            <div class="topic-name">Support Plans <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Basic, Developer, Business, Enterprise On-Ramp, Enterprise</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#F4A261')"></div>
+          <div class="topic-content" onclick="openModal('freetier')">
+            <div class="topic-name">Free Tier <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Always free, 12 meses, trials</div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <div class="topic-check" onclick="toggleCheck(this,'#F4A261')"></div>
+          <div class="topic-content" onclick="openModal('consolidado')">
+            <div class="topic-name">Cobrança consolidada <span class="topic-link-icon">ver conteúdo →</span></div>
+            <div class="topic-desc">Organizations para consolidar faturas e descontos por volume</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARMADILHAS -->
+  <div class="tab-panel" id="tab-armadilhas">
+    <div class="section-label">Erros mais comuns na prova</div>
+    <p class="section-desc">Pegadinhas clássicas que derrubam quem estudou mas não prestou atenção nos detalhes.</p>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">"Responsabilidade compartilhada" tem pegadinhas</div><div class="trap-desc">AWS gerencia hardware, hypervisor e infraestrutura física. VOCÊ gerencia SO, patches, dados, IAM e rede dentro da VPC. Borda cinza: RDS — AWS gerencia o SO do banco; você gerencia dados e acesso.</div></div></div>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">IAM Roles ≠ IAM Users</div><div class="trap-desc">User tem credenciais permanentes. Role é assumida temporariamente (EC2 acessa S3 via role, não via usuário). Sempre prefira roles para serviços AWS.</div></div></div>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">S3 não é sistema de arquivos</div><div class="trap-desc">S3 = object storage. EBS = block storage (disco de VM). EFS = file system compartilhado (NFS). Confundir esses três é erro clássico.</div></div></div>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">High Availability ≠ Fault Tolerance</div><div class="trap-desc">HA = minimiza downtime (pode ter breve interrupção). FT = zero downtime. Multi-AZ = HA. Active-Active multi-região = FT.</div></div></div>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">CloudWatch vs CloudTrail</div><div class="trap-desc">CloudWatch = métricas e logs (CPU, alarmes). CloudTrail = auditoria de API (quem fez o quê). "Quem deletou o bucket?" = CloudTrail.</div></div></div>
+    <div class="trap-card"><span class="trap-icon">⚠️</span><div><div class="trap-title">Reserved Instances vs Savings Plans</div><div class="trap-desc">Reserved = compromisso com instância específica. Savings Plans = compromisso com gasto em $/hora (mais flexível). Savings Plans é mais moderno.</div></div></div>
+  </div>
+
+  <!-- RECURSOS -->
+  <div class="tab-panel" id="tab-recursos">
+    <div class="section-label">Onde estudar</div>
+    <p class="section-desc">Foco no essencial. Não tente usar 10 fontes — vai dispersar.</p>
+    <div class="resource-card"><div class="resource-header"><div class="resource-name">AWS Skill Builder</div><div class="resource-tags"><span class="tag tag-essencial">ESSENCIAL</span><span class="tag tag-tipo">Gratuito</span></div></div><div class="resource-desc">Curso oficial: "AWS Cloud Practitioner Essentials" (6h)</div><a href="https://explore.skillbuilder.aws" target="_blank">🔗 explore.skillbuilder.aws</a></div>
+    <div class="resource-card"><div class="resource-header"><div class="resource-name">Simulados ExamTopics</div><div class="resource-tags"><span class="tag tag-essencial">ESSENCIAL</span><span class="tag tag-tipo">Gratuito</span></div></div><div class="resource-desc">Banco de questões reais com discussões</div><a href="https://www.examtopics.com/exams/amazon/clf-c02/" target="_blank">🔗 examtopics.com/exams/amazon/clf-c02/</a></div>
+    <div class="resource-card"><div class="resource-header"><div class="resource-name">AWS Free Tier</div><div class="resource-tags"><span class="tag tag-recomendado">RECOMENDADO</span><span class="tag tag-tipo">Gratuito</span></div></div><div class="resource-desc">Crie uma conta e pratique no console real</div><a href="https://aws.amazon.com/free/" target="_blank">🔗 aws.amazon.com/free/</a></div>
+    <div class="resource-card"><div class="resource-header"><div class="resource-name">Whizlabs / Udemy</div><div class="resource-tags"><span class="tag tag-opcional">OPCIONAL</span><span class="tag tag-tipo">Pago (~R$30)</span></div></div><div class="resource-desc">6 simulados completos de 65 questões cada</div><a href="https://www.udemy.com" target="_blank">🔗 udemy.com</a></div>
+    <div class="method-box"><div class="method-title">💡 Método recomendado</div><ol><li>Leia o tópico no Skill Builder (30-40 min)</li><li>Faça <strong>anotações com suas próprias palavras</strong></li><li>Responda 10 questões do ExamTopics sobre o tema</li><li>Revise os erros — entenda <em>por que</em> a certa é certa</li><li>A partir do dia 10: 1 simulado de 65 questões a cada 2 dias</li></ol></div>
+  </div>
+
+  <!-- SIMULADO -->
+  <div class="tab-panel" id="tab-simulado">
+    <!-- TELA INICIAL -->
+    <div id="sim-start">
+      <div class="sim-intro">
+        <h2>🎯 Simulado Cronometrado</h2>
+        <p>Treine no formato exato da prova real. Questões embaralhadas, tempo proporcional e nota final no padrão AWS.</p>
+        <div class="sim-specs">
+          <div class="sim-spec"><strong id="sim-qcount">—</strong>questões</div>
+          <div class="sim-spec"><strong id="sim-time">—</strong>minutos</div>
+          <div class="sim-spec"><strong>700</strong>nota p/ passar</div>
+        </div>
+        <p style="font-size:13px;color:#8892B0">A prova oficial tem 65 questões em 90 min. Este simulado usa o banco disponível, mantendo a proporção de tempo.</p>
+        <div style="margin-top:20px">
+          <button class="sim-btn" onclick="startSim()">▶ Iniciar simulado</button>
+        </div>
+        <div class="sim-last-score" id="sim-last-score"></div>
+      </div>
+    </div>
+
+    <!-- TELA DE QUESTÕES -->
+    <div id="sim-running" style="display:none">
+      <div class="sim-topbar">
+        <span class="sim-counter">Questão <span id="sim-current">1</span> de <span id="sim-total">0</span></span>
+        <span class="sim-timer" id="sim-timer">90:00</span>
+      </div>
+      <div class="sim-progress-bar"><div class="sim-progress-fill" id="sim-progress-fill"></div></div>
+      <div id="sim-question-area"></div>
+      <div class="sim-nav">
+        <button class="sim-nav-btn" id="sim-prev" onclick="navSim(-1)">← Anterior</button>
+        <button class="sim-nav-btn" id="sim-next" onclick="navSim(1)">Próxima →</button>
+      </div>
+      <div style="text-align:center;margin-top:14px">
+        <button class="sim-btn-secondary sim-btn" style="padding:10px 24px;font-size:13px" onclick="confirmFinish()">Finalizar agora</button>
+      </div>
+    </div>
+
+    <!-- TELA DE RESULTADO -->
+    <div id="sim-result" style="display:none"></div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-domain-tag" id="modal-domain-tag"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ─── DADOS DOS MODAIS ────────────────────────────────────────────────
+const MODAIS = {
+  beneficios: {
+    domain: "Domínio 1 — Cloud Concepts", domainColor: "#FF6B35",
+    title: "Benefícios da Nuvem AWS",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">A nuvem AWS oferece vantagens estruturais que mudam a forma de consumir TI. A prova vai testar se você sabe <strong>nomear e explicar</strong> cada benefício — não basta saber que "é mais barato".</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Termos-chave</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Agilidade</div><div class="term-desc">Recursos provisionados em minutos, não semanas</div></div>
+          <div class="term-card"><div class="term-name">Elasticidade</div><div class="term-desc">Escala automática para cima e para baixo conforme demanda</div></div>
+          <div class="term-card"><div class="term-name">Pay-as-you-go</div><div class="term-desc">Pague apenas pelo que usar, sem contratos fixos</div></div>
+          <div class="term-card"><div class="term-name">Alta disponibilidade</div><div class="term-desc">Sistemas projetados para minimizar downtime</div></div>
+          <div class="term-card"><div class="term-name">CapEx → OpEx</div><div class="term-desc">Troca gasto de capital por gasto operacional</div></div>
+          <div class="term-card"><div class="term-name">Economia de escala</div><div class="term-desc">AWS passa economias de escala para o cliente</div></div>
+          <div class="term-card"><div class="term-name">Alcance global</div><div class="term-desc">Deploy em múltiplas regiões com poucos cliques</div></div>
+          <div class="term-card"><div class="term-name">Foco no negócio</div><div class="term-desc">AWS cuida da infraestrutura; você foca no produto</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dica de prova</div>
+        <div class="tip-box"><div class="tip-box-title">⚡ Atenção</div><div class="tip-box-text"><strong>Elasticidade ≠ Escalabilidade.</strong> Escalabilidade = capacidade de crescer. Elasticidade = crescer E encolher automaticamente. Na prova, quando falar de ajuste automático conforme demanda, a resposta é elasticidade.</div></div>
+        <div class="tip-box"><div class="tip-box-title">💡 Memorize</div><div class="tip-box-text">Os 6 benefícios oficiais da AWS: Troca CapEx por OpEx, Economia de escala, Sem necessidade de prever capacidade, Agilidade, Eliminação de data center, Alcance global em minutos.</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer eliminar o custo de manutenção de servidores físicos e pagar apenas pelos recursos utilizados. Qual característica da nuvem AWS está sendo aproveitada?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'q1b')">A) Alta disponibilidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'q1b')">B) Escalabilidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'q1b')">C) Troca de CapEx por OpEx com modelo pay-as-you-go</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'q1b')">D) Alcance global</button></li>
+          </ul>
+          <div class="explanation" id="q1b"><strong>✅ C está correta.</strong> A empresa está eliminando investimento em capital (CapEx) em hardware e adotando o modelo operacional (OpEx) da nuvem, pagando apenas pelo uso.</div>
+        </div>
+        <div class="question-card">
+          <div class="question-text">Durante um evento de Black Friday, uma loja online precisa que seu sistema aumente a capacidade automaticamente e a reduza após o pico. Qual benefício da nuvem isso representa?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'q2b')">A) Alta disponibilidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'q2b')">B) Elasticidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'q2b')">C) Agilidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'q2b')">D) Alcance global</button></li>
+          </ul>
+          <div class="explanation" id="q2b"><strong>✅ B está correta.</strong> Elasticidade é a capacidade de escalar para cima E para baixo automaticamente conforme a demanda — cenário exato do Black Friday.</div>
+        </div>
+      </div>
+    `
+  },
+
+  responsabilidade: {
+    domain: "Domínio 1 — Cloud Concepts", domainColor: "#FF6B35",
+    title: "Modelo de Responsabilidade Compartilhada",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">A AWS e o cliente dividem responsabilidades de segurança. A AWS é responsável pela segurança <strong>DA</strong> nuvem (infraestrutura). O cliente é responsável pela segurança <strong>NA</strong> nuvem (o que coloca lá dentro).</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Divisão de responsabilidades</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">AWS gerencia</div><div class="term-desc">Hardware físico, data centers, rede global, hypervisor, regiões, AZs</div></div>
+          <div class="term-card"><div class="term-name">Cliente gerencia</div><div class="term-desc">Dados, SO (em IaaS), patches, IAM, criptografia de dados, configuração de rede</div></div>
+          <div class="term-card"><div class="term-name">EC2 (IaaS)</div><div class="term-desc">Cliente gerencia: SO, patches, firewall, dados</div></div>
+          <div class="term-card"><div class="term-name">RDS (PaaS)</div><div class="term-desc">AWS gerencia SO e patches do banco. Cliente gerencia dados e acesso</div></div>
+          <div class="term-card"><div class="term-name">S3</div><div class="term-desc">AWS gerencia infraestrutura. Cliente gerencia permissões e criptografia dos objetos</div></div>
+          <div class="term-card"><div class="term-name">Lambda</div><div class="term-desc">AWS gerencia tudo da infraestrutura. Cliente gerencia código e dados</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dica de prova</div>
+        <div class="tip-box"><div class="tip-box-title">⚡ Regra prática</div><div class="tip-box-text">Quanto mais gerenciado o serviço, mais a AWS assume. EC2 = mais responsabilidade do cliente. Lambda/RDS = menos. Pergunta-chave: <strong>"Quem instala os patches do SO?"</strong> — EC2: você. RDS: AWS.</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa usa Amazon RDS. De acordo com o modelo de responsabilidade compartilhada, de quem é a responsabilidade de aplicar patches no sistema operacional do banco de dados?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qr1')">A) Da empresa cliente</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qr1')">B) Da AWS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr1')">C) Compartilhada entre AWS e cliente</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr1')">D) Do provedor de banco de dados</button></li>
+          </ul>
+          <div class="explanation" id="qr1"><strong>✅ B está correta.</strong> RDS é um serviço gerenciado. A AWS cuida do SO e dos patches do banco. O cliente gerencia os dados e as permissões de acesso.</div>
+        </div>
+        <div class="question-card">
+          <div class="question-text">Qual das opções abaixo é de responsabilidade do CLIENTE no modelo de responsabilidade compartilhada da AWS?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qr2')">A) Segurança física dos data centers</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr2')">B) Manutenção do hardware de rede</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qr2')">C) Gerenciamento de permissões IAM</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr2')">D) Virtualização da infraestrutura</button></li>
+          </ul>
+          <div class="explanation" id="qr2"><strong>✅ C está correta.</strong> IAM é sempre responsabilidade do cliente — quem tem acesso a quê é uma decisão do cliente, nunca da AWS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  implantacao: {
+    domain: "Domínio 1 — Cloud Concepts", domainColor: "#FF6B35",
+    title: "Modelos de Implantação de Nuvem",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">Existem três formas principais de implantar soluções em nuvem. A prova testa se você consegue identificar o modelo correto dado um cenário.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Os 3 modelos</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Public Cloud</div><div class="term-desc">Tudo na AWS. Sem infraestrutura própria. Máximo de agilidade e menor custo inicial.</div></div>
+          <div class="term-card"><div class="term-name">Private Cloud (On-premises)</div><div class="term-desc">Infraestrutura própria no data center da empresa. Maior controle, maior custo.</div></div>
+          <div class="term-card"><div class="term-name">Hybrid Cloud</div><div class="term-desc">Parte na AWS, parte on-premises. Conectados por Direct Connect ou VPN.</div></div>
+          <div class="term-card"><div class="term-name">AWS Outposts</div><div class="term-desc">Hardware AWS no seu data center. Híbrido gerenciado pela AWS.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa de saúde precisa manter dados de pacientes em servidores locais por regulamentação, mas quer usar a AWS para processamento analítico. Qual modelo de implantação descreve essa situação?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qi1')">A) Nuvem pública</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi1')">B) Nuvem privada</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qi1')">C) Nuvem híbrida</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi1')">D) Multi-cloud</button></li>
+          </ul>
+          <div class="explanation" id="qi1"><strong>✅ C está correta.</strong> A empresa usa recursos locais (on-premises) e recursos na nuvem AWS simultaneamente — definição de nuvem híbrida.</div>
+        </div>
+      </div>
+    `
+  },
+
+  servico: {
+    domain: "Domínio 1 — Cloud Concepts", domainColor: "#FF6B35",
+    title: "Modelos de Serviço: IaaS, PaaS, SaaS",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">Os modelos definem <strong>quanto você gerencia</strong> versus quanto a AWS gerencia. Mais "as a Service" = menos responsabilidade sua.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Comparação dos modelos</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">IaaS</div><div class="term-desc">Infraestrutura como serviço. Você gerencia SO, middleware, dados. Ex: EC2</div></div>
+          <div class="term-card"><div class="term-name">PaaS</div><div class="term-desc">Plataforma como serviço. Você gerencia só a aplicação e dados. Ex: Elastic Beanstalk, RDS</div></div>
+          <div class="term-card"><div class="term-name">SaaS</div><div class="term-desc">Software como serviço. Você apenas usa. Ex: Gmail, Salesforce, AWS Chime</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Um desenvolvedor quer hospedar sua aplicação sem se preocupar com provisionamento de servidores ou configuração de SO. Qual modelo de serviço AWS melhor atende essa necessidade?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qs1')">A) IaaS — Amazon EC2</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qs1')">B) PaaS — AWS Elastic Beanstalk</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qs1')">C) SaaS — Amazon WorkMail</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qs1')">D) IaaS — Amazon VPC</button></li>
+          </ul>
+          <div class="explanation" id="qs1"><strong>✅ B está correta.</strong> PaaS permite que o desenvolvedor suba sua aplicação sem gerenciar a infraestrutura subjacente. Elastic Beanstalk é o exemplo padrão de PaaS na AWS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  wellarchitected: {
+    domain: "Domínio 1 — Cloud Concepts", domainColor: "#FF6B35",
+    title: "AWS Well-Architected Framework",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">Framework com <strong>6 pilares</strong> que guiam a construção de sistemas seguros, eficientes e econômicos na AWS. A prova vai dar um cenário e perguntar qual pilar se aplica.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Os 6 pilares</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">1. Excelência Operacional</div><div class="term-desc">Executar e monitorar sistemas. Melhorar continuamente processos e procedimentos.</div></div>
+          <div class="term-card"><div class="term-name">2. Segurança</div><div class="term-desc">Proteger dados, sistemas e ativos. IAM, criptografia, detecção de ameaças.</div></div>
+          <div class="term-card"><div class="term-name">3. Confiabilidade</div><div class="term-desc">Recuperar de falhas, escalar horizontalmente, gerenciar mudanças.</div></div>
+          <div class="term-card"><div class="term-name">4. Eficiência de Performance</div><div class="term-desc">Usar recursos computacionais com eficiência conforme demanda muda.</div></div>
+          <div class="term-card"><div class="term-name">5. Otimização de Custos</div><div class="term-desc">Evitar gastos desnecessários. Pay-as-you-go, Reserved Instances.</div></div>
+          <div class="term-card"><div class="term-name">6. Sustentabilidade</div><div class="term-desc">Minimizar impacto ambiental. Usar recursos de forma eficiente.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer reduzir seus custos de TI usando instâncias Reserved e desligando recursos não utilizados fora do horário comercial. Qual pilar do Well-Architected Framework isso representa?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qw1')">A) Confiabilidade</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qw1')">B) Segurança</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qw1')">C) Eficiência de Performance</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qw1')">D) Otimização de Custos</button></li>
+          </ul>
+          <div class="explanation" id="qw1"><strong>✅ D está correta.</strong> Otimização de Custos envolve usar Reserved Instances para workloads previsíveis e eliminar gastos com recursos ociosos.</div>
+        </div>
+      </div>
+    `
+  },
+
+  iam: {
+    domain: "Domínio 2 — Security & Compliance", domainColor: "#E63946",
+    title: "IAM — Identity & Access Management",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">IAM é o serviço que controla <strong>quem pode fazer o quê</strong> na sua conta AWS. É o tópico mais cobrado do CLF-C02 — aparece direta ou indiretamente em quase metade das questões.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Componentes do IAM</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">User</div><div class="term-desc">Identidade permanente com credenciais (usuário humano ou aplicação)</div></div>
+          <div class="term-card"><div class="term-name">Group</div><div class="term-desc">Conjunto de usuários. Policies aplicadas ao grupo valem para todos os membros</div></div>
+          <div class="term-card"><div class="term-name">Role</div><div class="term-desc">Identidade temporária assumida por serviços ou usuários. Sem senha fixa.</div></div>
+          <div class="term-card"><div class="term-name">Policy</div><div class="term-desc">Documento JSON que define permissões (Allow/Deny) sobre ações e recursos</div></div>
+          <div class="term-card"><div class="term-name">Least Privilege</div><div class="term-desc">Conceder APENAS as permissões necessárias para a tarefa. Princípio fundamental.</div></div>
+          <div class="term-card"><div class="term-name">MFA</div><div class="term-desc">Multi-Factor Authentication. Adiciona camada extra de segurança ao login</div></div>
+          <div class="term-card"><div class="term-name">Root Account</div><div class="term-desc">Conta com acesso total. Deve ser protegida com MFA e usada o mínimo possível</div></div>
+          <div class="term-card"><div class="term-name">Access Keys</div><div class="term-desc">Credenciais programáticas (acesso via CLI/SDK). Nunca compartilhar ou versionar no código.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dica de prova</div>
+        <div class="tip-box"><div class="tip-box-title">⚡ Roles vs Users para serviços</div><div class="tip-box-text">Quando uma instância EC2 precisa acessar o S3, a resposta CORRETA é usar uma <strong>IAM Role</strong>, não criar um usuário com chave de acesso. Roles são temporárias, auditáveis e mais seguras.</div></div>
+        <div class="tip-box"><div class="tip-box-title">💡 Root account</div><div class="tip-box-text">A prova frequentemente menciona que a conta root NÃO deve ser usada para tarefas do dia a dia. Sempre crie usuários IAM com permissões específicas.</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma aplicação rodando em Amazon EC2 precisa ler objetos de um bucket S3. Qual é a forma mais segura de conceder essa permissão?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qi1a')">A) Criar um usuário IAM e armazenar as credenciais no código</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi1a')">B) Usar as credenciais da conta root</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qi1a')">C) Criar uma IAM Role com a policy necessária e associar à instância EC2</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi1a')">D) Tornar o bucket S3 público</button></li>
+          </ul>
+          <div class="explanation" id="qi1a"><strong>✅ C está correta.</strong> IAM Roles são a melhor prática para conceder permissões a serviços AWS. Não há credenciais fixas para gerenciar — a AWS rotaciona automaticamente as credenciais temporárias.</div>
+        </div>
+        <div class="question-card">
+          <div class="question-text">Qual princípio de segurança recomenda que usuários e serviços recebam apenas as permissões mínimas necessárias para executar suas funções?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qi2a')">A) Defense in depth</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qi2a')">B) Least privilege</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi2a')">C) Zero trust</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qi2a')">D) Separation of duties</button></li>
+          </ul>
+          <div class="explanation" id="qi2a"><strong>✅ B está correta.</strong> Least privilege (menor privilégio) é o princípio central do IAM: conceder apenas o acesso estritamente necessário para cada função.</div>
+        </div>
+      </div>
+    `
+  },
+
+  organizations: {
+    domain: "Domínio 2 — Security & Compliance", domainColor: "#E63946",
+    title: "AWS Organizations & SCPs",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">AWS Organizations permite gerenciar <strong>múltiplas contas AWS</strong> de forma centralizada. Útil para empresas que precisam de isolamento entre ambientes ou equipes.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Termos-chave</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Management Account</div><div class="term-desc">Conta raiz da organização. Controla todas as outras contas.</div></div>
+          <div class="term-card"><div class="term-name">OU (Org Unit)</div><div class="term-desc">Unidade organizacional. Agrupa contas para aplicar políticas em conjunto.</div></div>
+          <div class="term-card"><div class="term-name">SCP</div><div class="term-desc">Service Control Policy. Define o MÁXIMO de permissões que contas membros podem ter.</div></div>
+          <div class="term-card"><div class="term-name">Cobrança Consolidada</div><div class="term-desc">Uma única fatura para todas as contas + descontos por volume agregado.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer garantir que nenhuma conta AWS de desenvolvimento possa criar recursos em regiões fora do Brasil, independente das permissões IAM dos usuários. Qual recurso da AWS deve ser usado?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qo1')">A) IAM Permission Boundary</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qo1')">B) Service Control Policy (SCP) no AWS Organizations</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qo1')">C) AWS Config Rule</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qo1')">D) IAM Policy com Deny explícito</button></li>
+          </ul>
+          <div class="explanation" id="qo1"><strong>✅ B está correta.</strong> SCPs definem limites máximos de permissão para contas inteiras — mesmo que um usuário tenha Allow no IAM, o SCP pode bloquear a ação a nível de conta.</div>
+        </div>
+      </div>
+    `
+  },
+
+  seguranca: {
+    domain: "Domínio 2 — Security & Compliance", domainColor: "#E63946",
+    title: "Serviços de Segurança AWS",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">A prova testa se você sabe <strong>qual serviço usar em cada cenário</strong>. O erro clássico é confundir serviços com nomes parecidos (Shield vs WAF, GuardDuty vs Inspector).</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">AWS Shield</div><div class="term-desc">Proteção contra ataques DDoS. Standard (gratuito) e Advanced (pago, SLA garantido).</div></div>
+          <div class="term-card"><div class="term-name">AWS WAF</div><div class="term-desc">Web Application Firewall. Filtra tráfego HTTP malicioso (SQL injection, XSS).</div></div>
+          <div class="term-card"><div class="term-name">Amazon GuardDuty</div><div class="term-desc">Detecção de ameaças com ML. Monitora logs de CloudTrail, VPC Flow e DNS.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Inspector</div><div class="term-desc">Avalia vulnerabilidades em EC2 e containers. Analisa código e configuração.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Macie</div><div class="term-desc">Descobre e protege dados sensíveis no S3 usando ML (PII, cartões, senhas).</div></div>
+          <div class="term-card"><div class="term-name">AWS Security Hub</div><div class="term-desc">Painel centralizado de segurança. Agrega alertas de vários serviços.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer ser notificada automaticamente se um usuário IAM começar a fazer chamadas de API suspeitas a partir de um IP desconhecido. Qual serviço AWS deve ser usado?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qseg1')">A) AWS Inspector</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qseg1')">B) AWS Shield</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qseg1')">C) Amazon GuardDuty</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qseg1')">D) AWS WAF</button></li>
+          </ul>
+          <div class="explanation" id="qseg1"><strong>✅ C está correta.</strong> GuardDuty monitora chamadas de API via CloudTrail e usa ML para detectar comportamentos suspeitos, como logins de IPs incomuns ou regiões inesperadas.</div>
+        </div>
+        <div class="question-card">
+          <div class="question-text">Qual serviço AWS protege aplicações web contra ataques como SQL injection e cross-site scripting (XSS)?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qseg2')">A) AWS Shield</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qseg2')">B) AWS WAF</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qseg2')">C) Amazon GuardDuty</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qseg2')">D) Amazon Macie</button></li>
+          </ul>
+          <div class="explanation" id="qseg2"><strong>✅ B está correta.</strong> AWS WAF filtra requisições HTTP/HTTPS com base em regras, bloqueando padrões maliciosos como SQL injection e XSS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  conformidade: {
+    domain: "Domínio 2 — Security & Compliance", domainColor: "#E63946",
+    title: "Conformidade e Governança",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Termos-chave</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">AWS Artifact</div><div class="term-desc">Portal com relatórios de conformidade da AWS (SOC, ISO, PCI-DSS). Acesso sob demanda.</div></div>
+          <div class="term-card"><div class="term-name">AWS CloudTrail</div><div class="term-desc">Registra todas as chamadas de API. Quem fez o quê, quando e de onde.</div></div>
+          <div class="term-card"><div class="term-name">AWS Config</div><div class="term-desc">Rastreia mudanças de configuração nos recursos AWS ao longo do tempo.</div></div>
+          <div class="term-card"><div class="term-name">AWS Audit Manager</div><div class="term-desc">Automatiza coleta de evidências para auditorias de conformidade.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma equipe de auditoria precisa verificar quem deletou um bucket S3 na semana passada. Qual serviço AWS fornece essa informação?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qconf1')">A) Amazon CloudWatch</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qconf1')">B) AWS CloudTrail</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qconf1')">C) AWS Config</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qconf1')">D) AWS Artifact</button></li>
+          </ul>
+          <div class="explanation" id="qconf1"><strong>✅ B está correta.</strong> CloudTrail registra chamadas de API com detalhes de quem executou, quando e de qual IP. É o serviço de auditoria de ações na AWS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  criptografia: {
+    domain: "Domínio 2 — Security & Compliance", domainColor: "#E63946",
+    title: "Criptografia na AWS",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Termos-chave</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Encryption at rest</div><div class="term-desc">Dados criptografados quando armazenados (S3, EBS, RDS). KMS gerencia as chaves.</div></div>
+          <div class="term-card"><div class="term-name">Encryption in transit</div><div class="term-desc">Dados criptografados em trânsito via SSL/TLS. ACM gerencia certificados.</div></div>
+          <div class="term-card"><div class="term-name">AWS KMS</div><div class="term-desc">Key Management Service. Cria e gerencia chaves de criptografia.</div></div>
+          <div class="term-card"><div class="term-name">AWS ACM</div><div class="term-desc">Certificate Manager. Provisiona certificados SSL/TLS gratuitos para serviços AWS.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa precisa garantir que todos os dados armazenados em seus buckets S3 estejam criptografados. Qual serviço AWS gerencia as chaves de criptografia?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qcr1')">A) AWS ACM</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qcr1')">B) AWS KMS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qcr1')">C) AWS IAM</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qcr1')">D) AWS Secrets Manager</button></li>
+          </ul>
+          <div class="explanation" id="qcr1"><strong>✅ B está correta.</strong> AWS KMS (Key Management Service) é o serviço para criar, gerenciar e auditar chaves de criptografia usadas em serviços como S3, EBS e RDS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  computacao: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Serviços de Computação",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">A prova testa se você sabe <strong>quando usar cada serviço de computação</strong>. Não precisa saber configurar — precisa saber o propósito de cada um.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon EC2</div><div class="term-desc">Servidores virtuais. Controle total do SO. IaaS. Melhor para workloads tradicionais.</div></div>
+          <div class="term-card"><div class="term-name">AWS Lambda</div><div class="term-desc">Serverless. Executa código em resposta a eventos. Paga por execução. Sem servidor para gerenciar.</div></div>
+          <div class="term-card"><div class="term-name">Amazon ECS</div><div class="term-desc">Orquestração de containers Docker. Gerenciado pela AWS.</div></div>
+          <div class="term-card"><div class="term-name">Amazon EKS</div><div class="term-desc">Kubernetes gerenciado. Para quem já usa Kubernetes.</div></div>
+          <div class="term-card"><div class="term-name">Elastic Beanstalk</div><div class="term-desc">PaaS. Faz deploy automático da sua aplicação. Gerencia EC2, load balancer, auto scaling.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Lightsail</div><div class="term-desc">Servidores simples com preço fixo. Para projetos pequenos e desenvolvedores iniciantes.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer executar código que processa imagens enviadas ao S3, sem precisar provisionar ou gerenciar servidores, pagando apenas pelo tempo de execução. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qcomp1')">A) Amazon EC2</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qcomp1')">B) AWS Lambda</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qcomp1')">C) Amazon ECS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qcomp1')">D) AWS Elastic Beanstalk</button></li>
+          </ul>
+          <div class="explanation" id="qcomp1"><strong>✅ B está correta.</strong> Lambda é serverless — executa código em resposta a eventos (como upload no S3) sem provisionar servidores. Paga-se apenas pelas invocações e tempo de execução.</div>
+        </div>
+      </div>
+    `
+  },
+
+  storage: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Serviços de Storage",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">Confundir S3, EBS e EFS é o erro mais comum neste domínio. Memorize o tipo de cada um antes de qualquer outra coisa.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon S3</div><div class="term-desc">Object storage. Ilimitado. Para arquivos, backups, estáticos de site, data lake.</div></div>
+          <div class="term-card"><div class="term-name">Amazon EBS</div><div class="term-desc">Block storage. Disco virtual para EC2. Vinculado a uma AZ.</div></div>
+          <div class="term-card"><div class="term-name">Amazon EFS</div><div class="term-desc">File system compartilhado (NFS). Múltiplas instâncias EC2 acessam simultaneamente.</div></div>
+          <div class="term-card"><div class="term-name">S3 Glacier</div><div class="term-desc">Arquivamento de longo prazo. Custo baixíssimo. Recuperação leva minutos a horas.</div></div>
+          <div class="term-card"><div class="term-name">Storage Gateway</div><div class="term-desc">Conecta ambiente on-premises ao armazenamento S3. Híbrido.</div></div>
+          <div class="term-card"><div class="term-name">S3 Classes</div><div class="term-desc">Standard, IA, One Zone-IA, Glacier, Glacier Deep Archive — troca custo por acesso.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Várias instâncias EC2 precisam acessar simultaneamente o mesmo sistema de arquivos. Qual serviço AWS atende essa necessidade?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qst1')">A) Amazon S3</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qst1')">B) Amazon EBS</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qst1')">C) Amazon EFS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qst1')">D) Amazon Glacier</button></li>
+          </ul>
+          <div class="explanation" id="qst1"><strong>✅ C está correta.</strong> EFS é um sistema de arquivos NFS que pode ser montado em múltiplas instâncias EC2 simultaneamente. EBS é vinculado a uma única instância por vez.</div>
+        </div>
+      </div>
+    `
+  },
+
+  database: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Banco de Dados",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon RDS</div><div class="term-desc">Banco relacional gerenciado. MySQL, PostgreSQL, Oracle, SQL Server, MariaDB.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Aurora</div><div class="term-desc">Banco relacional da AWS. Até 5x mais rápido que MySQL. Compatível com MySQL/PostgreSQL.</div></div>
+          <div class="term-card"><div class="term-name">Amazon DynamoDB</div><div class="term-desc">NoSQL. Serverless. Millisecond latency. Para alta escala e acesso por chave.</div></div>
+          <div class="term-card"><div class="term-name">Amazon ElastiCache</div><div class="term-desc">Cache em memória (Redis ou Memcached). Reduz latência de banco.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Redshift</div><div class="term-desc">Data warehouse. Análise de grandes volumes de dados. OLAP, não OLTP.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma aplicação precisa de um banco de dados NoSQL com latência de milissegundos e capacidade de escalar globalmente para milhões de requisições por segundo. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qdb1')">A) Amazon RDS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qdb1')">B) Amazon Redshift</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qdb1')">C) Amazon DynamoDB</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qdb1')">D) Amazon ElastiCache</button></li>
+          </ul>
+          <div class="explanation" id="qdb1"><strong>✅ C está correta.</strong> DynamoDB é o banco NoSQL serverless da AWS, projetado para latência em milissegundos e escala massiva. Redshift é para análise de dados (OLAP).</div>
+        </div>
+      </div>
+    `
+  },
+
+  rede: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Rede e Conectividade",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon VPC</div><div class="term-desc">Rede privada virtual na AWS. Isolamento lógico de recursos. Subnets públicas e privadas.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Route 53</div><div class="term-desc">DNS gerenciado da AWS. Roteamento de tráfego, health checks, failover.</div></div>
+          <div class="term-card"><div class="term-name">Amazon CloudFront</div><div class="term-desc">CDN global. Entrega conteúdo com baixa latência via edge locations.</div></div>
+          <div class="term-card"><div class="term-name">AWS Direct Connect</div><div class="term-desc">Conexão privada dedicada entre on-premises e AWS. Mais estável que VPN.</div></div>
+          <div class="term-card"><div class="term-name">AWS VPN</div><div class="term-desc">Conexão criptografada via internet entre on-premises e VPC.</div></div>
+          <div class="term-card"><div class="term-name">Elastic Load Balancer</div><div class="term-desc">Distribui tráfego entre múltiplas instâncias EC2. Alta disponibilidade.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa precisa de uma conexão de rede dedicada e privada, de baixa latência e alto throughput, entre seu data center e a AWS. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qr1n')">A) AWS VPN</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qr1n')">B) AWS Direct Connect</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr1n')">C) Amazon CloudFront</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qr1n')">D) Amazon Route 53</button></li>
+          </ul>
+          <div class="explanation" id="qr1n"><strong>✅ B está correta.</strong> Direct Connect é uma conexão física dedicada — mais estável, previsível e segura que VPN (que trafega pela internet pública).</div>
+        </div>
+      </div>
+    `
+  },
+
+  analytics: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Analytics & Machine Learning",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon Athena</div><div class="term-desc">Consulta SQL direto no S3 sem precisar carregar os dados. Serverless.</div></div>
+          <div class="term-card"><div class="term-name">AWS Glue</div><div class="term-desc">ETL gerenciado. Descoberta e transformação de dados para analytics.</div></div>
+          <div class="term-card"><div class="term-name">Amazon SageMaker</div><div class="term-desc">Plataforma completa para construir, treinar e implantar modelos de ML.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Rekognition</div><div class="term-desc">Análise de imagens e vídeos com IA (detecção de rostos, objetos, textos).</div></div>
+          <div class="term-card"><div class="term-name">Amazon Comprehend</div><div class="term-desc">NLP — analisa sentimentos, entidades e idiomas em textos.</div></div>
+          <div class="term-card"><div class="term-name">Amazon Lex</div><div class="term-desc">Chatbots com voz e texto. Mesma tecnologia da Alexa.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer analisar dados de vendas armazenados no S3 usando SQL, sem precisar mover os dados para outro sistema. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,true,'qan1')">A) Amazon Athena</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qan1')">B) Amazon Redshift</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qan1')">C) AWS Glue</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qan1')">D) Amazon RDS</button></li>
+          </ul>
+          <div class="explanation" id="qan1"><strong>✅ A está correta.</strong> Athena permite consultar dados diretamente no S3 com SQL. Serverless, sem necessidade de carregar dados em outro banco.</div>
+        </div>
+      </div>
+    `
+  },
+
+  integracao: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Integração de Aplicações",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon SQS</div><div class="term-desc">Fila de mensagens. Desacopla componentes. Mensagem processada por UM consumidor.</div></div>
+          <div class="term-card"><div class="term-name">Amazon SNS</div><div class="term-desc">Pub/Sub. Notificações para MÚLTIPLOS assinantes simultaneamente (email, SMS, Lambda).</div></div>
+          <div class="term-card"><div class="term-name">Amazon EventBridge</div><div class="term-desc">Barramento de eventos. Conecta aplicações via eventos de serviços AWS ou externos.</div></div>
+          <div class="term-card"><div class="term-name">AWS Step Functions</div><div class="term-desc">Orquestração de workflows serverless. Coordena múltiplos serviços AWS.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dica de prova</div>
+        <div class="tip-box"><div class="tip-box-title">⚡ SQS vs SNS</div><div class="tip-box-text"><strong>SQS</strong>: um produtor, um consumidor. Fila. Garante processamento. <strong>SNS</strong>: um produtor, MUITOS consumidores. Broadcast. Notificação.</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma aplicação precisa enviar notificações por email, SMS e acionar uma função Lambda simultaneamente quando um pedido é concluído. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qint1')">A) Amazon SQS</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qint1')">B) Amazon SNS</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qint1')">C) AWS Step Functions</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qint1')">D) Amazon EventBridge</button></li>
+          </ul>
+          <div class="explanation" id="qint1"><strong>✅ B está correta.</strong> SNS (pub/sub) publica uma mensagem que é enviada simultaneamente a múltiplos assinantes — email, SMS, Lambda, SQS etc.</div>
+        </div>
+      </div>
+    `
+  },
+
+  management: {
+    domain: "Domínio 3 — Technology & Services", domainColor: "#2A9D8F",
+    title: "Management & Governance",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de serviços</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Amazon CloudWatch</div><div class="term-desc">Monitoramento de métricas, logs e alarmes. CPU, memória, erros, latência.</div></div>
+          <div class="term-card"><div class="term-name">AWS CloudTrail</div><div class="term-desc">Auditoria de API. Quem fez o quê, quando, de onde.</div></div>
+          <div class="term-card"><div class="term-name">AWS CloudFormation</div><div class="term-desc">Infrastructure as Code. Provisiona recursos AWS via templates YAML/JSON.</div></div>
+          <div class="term-card"><div class="term-name">AWS Systems Manager</div><div class="term-desc">Gerencia instâncias EC2 em escala. Patch, inventário, automação de comandos.</div></div>
+          <div class="term-card"><div class="term-name">AWS Trusted Advisor</div><div class="term-desc">Recomendações automáticas em 5 categorias: custo, performance, segurança, tolerância a falhas, limites de serviço.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Um engenheiro de infraestrutura quer criar alarme para ser notificado quando o uso de CPU de uma instância EC2 ultrapassar 80%. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,true,'qmg1')">A) Amazon CloudWatch</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qmg1')">B) AWS CloudTrail</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qmg1')">C) AWS Trusted Advisor</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qmg1')">D) AWS Config</button></li>
+          </ul>
+          <div class="explanation" id="qmg1"><strong>✅ A está correta.</strong> CloudWatch coleta métricas (como CPU) e permite criar alarmes baseados em thresholds — exatamente o cenário descrito.</div>
+        </div>
+      </div>
+    `
+  },
+
+  precos: {
+    domain: "Domínio 4 — Billing & Pricing", domainColor: "#F4A261",
+    title: "Modelos de Preço AWS",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Os modelos principais</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">On-Demand</div><div class="term-desc">Paga por hora/segundo. Sem compromisso. Mais caro. Para workloads imprevisíveis.</div></div>
+          <div class="term-card"><div class="term-name">Reserved Instances</div><div class="term-desc">Compromisso de 1 ou 3 anos. Desconto de até 72%. Para workloads estáveis e previsíveis.</div></div>
+          <div class="term-card"><div class="term-name">Spot Instances</div><div class="term-desc">Usa capacidade ociosa da AWS. Desconto de até 90%. Pode ser interrompida com 2 min de aviso.</div></div>
+          <div class="term-card"><div class="term-name">Savings Plans</div><div class="term-desc">Compromisso de $/hora por 1-3 anos. Mais flexível que Reserved. Aplica a EC2, Lambda, Fargate.</div></div>
+          <div class="term-card"><div class="term-name">Dedicated Hosts</div><div class="term-desc">Servidor físico dedicado. Para licenças que exigem hardware dedicado (compliance).</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa executa uma aplicação de processamento de dados que pode ser interrompida a qualquer momento e reiniciada. Qual modelo de precificação EC2 oferece o maior desconto para esse caso?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qp1')">A) On-Demand</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qp1')">B) Reserved Instances</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qp1')">C) Spot Instances</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qp1')">D) Dedicated Hosts</button></li>
+          </ul>
+          <div class="explanation" id="qp1"><strong>✅ C está correta.</strong> Spot Instances oferecem descontos de até 90%, mas podem ser interrompidas. São ideais para workloads tolerantes a interrupção como processamento em batch.</div>
+        </div>
+      </div>
+    `
+  },
+
+  billing: {
+    domain: "Domínio 4 — Billing & Pricing", domainColor: "#F4A261",
+    title: "Ferramentas de Billing",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Mapa de ferramentas</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">AWS Cost Explorer</div><div class="term-desc">Visualiza e analisa custos históricos. Gráficos, filtros por serviço/tag/região.</div></div>
+          <div class="term-card"><div class="term-name">AWS Budgets</div><div class="term-desc">Define orçamentos e envia alertas quando o gasto se aproxima ou ultrapassa o limite.</div></div>
+          <div class="term-card"><div class="term-name">Cost & Usage Report</div><div class="term-desc">Relatório detalhado de todos os gastos. Exportado para S3. Mais granular.</div></div>
+          <div class="term-card"><div class="term-name">Pricing Calculator</div><div class="term-desc">Estima custo antes de usar. Para planejamento e propostas.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa quer receber um alerta por email quando seus gastos na AWS ultrapassarem $1.000 no mês. Qual serviço usar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qbi1')">A) AWS Cost Explorer</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qbi1')">B) AWS Budgets</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qbi1')">C) Cost & Usage Report</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qbi1')">D) AWS Pricing Calculator</button></li>
+          </ul>
+          <div class="explanation" id="qbi1"><strong>✅ B está correta.</strong> AWS Budgets é o serviço para definir limites de gasto e configurar alertas automáticos por email ou SNS.</div>
+        </div>
+      </div>
+    `
+  },
+
+  support: {
+    domain: "Domínio 4 — Billing & Pricing", domainColor: "#F4A261",
+    title: "AWS Support Plans",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Os 5 planos</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Basic (gratuito)</div><div class="term-desc">Documentação, fóruns, Trusted Advisor (7 checks). Sem suporte técnico.</div></div>
+          <div class="term-card"><div class="term-name">Developer</div><div class="term-desc">Email em horário comercial. 1 contato. Resposta em 12-24h. Para desenvolvimento.</div></div>
+          <div class="term-card"><div class="term-name">Business</div><div class="term-desc">24/7 telefone/chat. Trusted Advisor completo. Resposta crítica em 1h. Para produção.</div></div>
+          <div class="term-card"><div class="term-name">Enterprise On-Ramp</div><div class="term-desc">Pool de Technical Account Managers. Resposta crítica em 30 min.</div></div>
+          <div class="term-card"><div class="term-name">Enterprise</div><div class="term-desc">TAM dedicado. Resposta crítica em 15 min. Para missão crítica.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dica de prova</div>
+        <div class="tip-box"><div class="tip-box-title">💡 Memorize os tempos de resposta</div><div class="tip-box-text">Produção down: Business = 1h, Enterprise On-Ramp = 30min, Enterprise = 15min. Sistema crítico down: Business = 1h, Enterprise = 15min.</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa tem sistemas de missão crítica na AWS e precisa de um Technical Account Manager dedicado e tempo de resposta de 15 minutos para incidentes críticos. Qual plano de suporte deve contratar?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qsup1')">A) Business</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qsup1')">B) Enterprise On-Ramp</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qsup1')">C) Enterprise</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qsup1')">D) Developer</button></li>
+          </ul>
+          <div class="explanation" id="qsup1"><strong>✅ C está correta.</strong> Apenas o plano Enterprise oferece TAM dedicado E tempo de resposta de 15 minutos para sistema crítico down.</div>
+        </div>
+      </div>
+    `
+  },
+
+  freetier: {
+    domain: "Domínio 4 — Billing & Pricing", domainColor: "#F4A261",
+    title: "AWS Free Tier",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">As 3 categorias</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Always Free</div><div class="term-desc">Sem expiração. Ex: Lambda (1M requisições/mês), DynamoDB (25GB), SNS (1M pub).</div></div>
+          <div class="term-card"><div class="term-name">12 Meses Gratuitos</div><div class="term-desc">Após criar a conta. Ex: EC2 t2.micro (750h/mês), S3 (5GB), RDS (750h).</div></div>
+          <div class="term-card"><div class="term-name">Trials</div><div class="term-desc">Período curto de avaliação. Ex: Amazon SageMaker (2 meses), GuardDuty (30 dias).</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma startup criou uma conta AWS há 13 meses. O EC2 t2.micro que estava usando gratuitamente começou a ser cobrado. Por quê?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qft1')">A) O EC2 faz parte da categoria "Always Free"</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qft1')">B) O EC2 t2.micro faz parte dos "12 meses gratuitos" que já expiraram</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qft1')">C) O EC2 nunca foi gratuito</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qft1')">D) A startup ultrapassou o limite de regiões</button></li>
+          </ul>
+          <div class="explanation" id="qft1"><strong>✅ B está correta.</strong> EC2 t2.micro é "12 meses gratuitos" — válido apenas no primeiro ano após criação da conta. Após 12 meses, a cobrança normal é aplicada.</div>
+        </div>
+      </div>
+    `
+  },
+
+  consolidado: {
+    domain: "Domínio 4 — Billing & Pricing", domainColor: "#F4A261",
+    title: "Cobrança Consolidada",
+    content: `
+      <div class="modal-section">
+        <div class="modal-section-title">Conceito central</div>
+        <div class="modal-text">O AWS Organizations permite consolidar a fatura de múltiplas contas em <strong>uma única fatura</strong> na management account, com dois benefícios principais.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Benefícios</div>
+        <div class="terms-grid">
+          <div class="term-card"><div class="term-name">Fatura única</div><div class="term-desc">Uma única cobrança para todas as contas da organização. Simplifica gestão financeira.</div></div>
+          <div class="term-card"><div class="term-name">Desconto por volume</div><div class="term-desc">Uso agregado de todas as contas conta para atingir faixas de desconto de S3, EC2, etc.</div></div>
+          <div class="term-card"><div class="term-name">Compartilhamento de Reserved</div><div class="term-desc">Reserved Instances e Savings Plans podem ser compartilhados entre contas da organização.</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Questões simuladas</div>
+        <div class="question-card">
+          <div class="question-text">Uma empresa tem 5 contas AWS separadas para diferentes departamentos. Qual recurso permite receber uma única fatura e obter descontos pelo uso combinado de todas as contas?</div>
+          <ul class="options-list">
+            <li><button class="option-btn" onclick="answer(this,false,'qco1')">A) AWS Cost Explorer</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qco1')">B) AWS Budgets</button></li>
+            <li><button class="option-btn" onclick="answer(this,true,'qco1')">C) Cobrança consolidada via AWS Organizations</button></li>
+            <li><button class="option-btn" onclick="answer(this,false,'qco1')">D) AWS Pricing Calculator</button></li>
+          </ul>
+          <div class="explanation" id="qco1"><strong>✅ C está correta.</strong> A cobrança consolidada do AWS Organizations unifica faturas e agrega o uso para atingir descontos por volume que nenhuma conta alcançaria individualmente.</div>
+        </div>
+      </div>
+    `
+  }
+};
+
+// ─── LÓGICA ────────────────────────────────────────────────────────
+let checkedCount = 0;
+const TOTAL = 22;
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleDomain(btn) {
+  const topics = btn.nextElementSibling;
+  const arrow = btn.querySelector('.domain-arrow');
+  const isOpen = topics.classList.contains('open');
+  topics.classList.toggle('open');
+  arrow.textContent = isOpen ? '▼' : '▲';
+}
+
+// índice estável de cada tópico para persistência
+function topicIndex(item) {
+  return Array.from(document.querySelectorAll('.topic-item')).indexOf(item);
+}
+
+function saveChecks() {
+  const done = [];
+  document.querySelectorAll('.topic-item').forEach((item, i) => {
+    if (item.classList.contains('done')) done.push(i);
+  });
+  try { localStorage.setItem('awsclf_checks', JSON.stringify(done)); } catch(e) {}
+}
+
+function toggleCheck(el, color) {
+  const item = el.closest('.topic-item');
+  const isDone = item.classList.contains('done');
+  if (isDone) {
+    item.classList.remove('done');
+    el.style.background = 'transparent';
+    el.style.borderColor = '#4A5568';
+    el.textContent = '';
+    checkedCount--;
+  } else {
+    item.classList.add('done');
+    el.style.background = color;
+    el.style.borderColor = color;
+    el.textContent = '✓';
+    checkedCount++;
+  }
+  updateProgress();
+  saveChecks();
+}
+
+function updateProgress() {
+  const pct = Math.round((checkedCount / TOTAL) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = checkedCount + '/' + TOTAL + ' (' + pct + '%)';
+}
+
+// restaura checkboxes salvos
+function restoreChecks() {
+  let done = [];
+  try { done = JSON.parse(localStorage.getItem('awsclf_checks') || '[]'); } catch(e) {}
+  if (!done.length) return;
+  const items = document.querySelectorAll('.topic-item');
+  done.forEach(i => {
+    const item = items[i];
+    if (!item) return;
+    const check = item.querySelector('.topic-check');
+    // descobre a cor pelo onclick
+    const onclickStr = check.getAttribute('onclick') || '';
+    const match = onclickStr.match(/'(#[0-9A-Fa-f]{6})'/);
+    const color = match ? match[1] : '#6C63FF';
+    item.classList.add('done');
+    check.style.background = color;
+    check.style.borderColor = color;
+    check.textContent = '✓';
+    checkedCount++;
+  });
+  updateProgress();
+}
+
+function openModal(id) {
+  const data = MODAIS[id];
+  if (!data) return;
+  document.getElementById('modal-domain-tag').textContent = data.domain;
+  document.getElementById('modal-domain-tag').style.color = data.domainColor;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-body').innerHTML = data.content;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function answer(btn, isCorrect, qid) {
+  const card = btn.closest('.question-card');
+  const btns = card.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    btns.forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('true')) b.classList.add('correct');
+    });
+  }
+  const exp = document.getElementById(qid);
+  if (exp) exp.classList.add('show');
+}
+
+// ════════════════════════════════════════════════════════════════
+// SIMULADO CRONOMETRADO
+// ════════════════════════════════════════════════════════════════
+const QUESTOES = [
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Uma empresa quer eliminar gastos com data centers físicos e pagar apenas pelos recursos que consome. Qual benefício da nuvem representa isso?", o:["Alta disponibilidade","Troca de CapEx por OpEx (pay-as-you-go)","Escalabilidade vertical","Tolerância a falhas"], a:1, e:"Pay-as-you-go troca investimento de capital (CapEx) por gasto operacional (OpEx)." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Durante a Black Friday, um e-commerce precisa que a capacidade aumente e diminua automaticamente conforme a demanda. Qual conceito descreve isso?", o:["Agilidade","Elasticidade","Durabilidade","Disponibilidade"], a:1, e:"Elasticidade é escalar para cima E para baixo automaticamente conforme demanda." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Em RDS, de quem é a responsabilidade de aplicar patches no SO do banco de dados?", o:["Do cliente","Da AWS","Compartilhada igualmente","Do fornecedor do banco"], a:1, e:"RDS é gerenciado: a AWS cuida do SO e patches. O cliente cuida dos dados e acessos." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Qual item é SEMPRE responsabilidade do cliente no modelo de responsabilidade compartilhada?", o:["Segurança física dos data centers","Gerenciamento de permissões IAM","Manutenção do hypervisor","Infraestrutura de rede global"], a:1, e:"Gerenciamento de identidade e acesso (IAM) é sempre do cliente." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Uma empresa mantém parte dos dados em servidores locais e usa a AWS para processamento. Qual modelo de implantação é esse?", o:["Nuvem pública","Nuvem privada","Nuvem híbrida","Multi-cloud"], a:2, e:"Híbrida combina recursos on-premises e nuvem AWS." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Um desenvolvedor quer hospedar uma aplicação sem gerenciar servidores ou SO. Qual modelo de serviço atende melhor?", o:["IaaS (EC2)","PaaS (Elastic Beanstalk)","SaaS (WorkMail)","On-premises"], a:1, e:"PaaS permite focar na aplicação sem gerenciar a infraestrutura subjacente." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Reduzir custos com Reserved Instances e desligar recursos ociosos representa qual pilar do Well-Architected Framework?", o:["Confiabilidade","Segurança","Otimização de Custos","Eficiência de Performance"], a:2, e:"Otimização de Custos envolve evitar gastos desnecessários e usar modelos de preço eficientes." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Quantos pilares tem o AWS Well-Architected Framework?", o:["4 pilares","5 pilares","6 pilares","7 pilares"], a:2, e:"São 6: Excelência Operacional, Segurança, Confiabilidade, Eficiência de Performance, Otimização de Custos e Sustentabilidade." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"O que diferencia Alta Disponibilidade (HA) de Tolerância a Falhas (FT)?", o:["São sinônimos","HA minimiza downtime; FT garante zero downtime","FT é mais barato que HA","HA só funciona em uma AZ"], a:1, e:"HA aceita breve interrupção; FT continua operando mesmo com falha total de componente." },
+
+  { d:"Security & Compliance", c:"#E63946", q:"Uma instância EC2 precisa acessar um bucket S3. Qual a forma mais segura?", o:["Criar usuário IAM com chave no código","Usar a conta root","Criar uma IAM Role e associar à instância","Tornar o bucket público"], a:2, e:"IAM Roles fornecem credenciais temporárias e rotacionadas automaticamente — a melhor prática." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual princípio recomenda conceder apenas as permissões mínimas necessárias?", o:["Defense in depth","Least privilege","Zero trust","Fail-safe"], a:1, e:"Least privilege (menor privilégio) é o princípio central do IAM." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual recurso impede que contas de uma organização criem recursos fora de certas regiões, independente do IAM?", o:["IAM Policy","Service Control Policy (SCP)","Security Group","Network ACL"], a:1, e:"SCPs definem o limite máximo de permissões a nível de conta no AWS Organizations." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço detecta atividades suspeitas analisando logs de CloudTrail, VPC Flow e DNS com machine learning?", o:["AWS Inspector","Amazon GuardDuty","AWS Shield","AWS WAF"], a:1, e:"GuardDuty é o serviço de detecção de ameaças baseado em ML." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço protege aplicações web contra SQL injection e XSS?", o:["AWS Shield","AWS WAF","Amazon Macie","Amazon Inspector"], a:1, e:"AWS WAF é o Web Application Firewall que filtra tráfego HTTP malicioso." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço protege especificamente contra ataques DDoS?", o:["AWS WAF","AWS Shield","Amazon GuardDuty","AWS Config"], a:1, e:"AWS Shield é a proteção contra DDoS (Standard gratuito, Advanced pago)." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço descobre e protege dados sensíveis (PII) armazenados no S3?", o:["Amazon Macie","Amazon Inspector","AWS Config","AWS Artifact"], a:0, e:"Macie usa ML para identificar dados sensíveis como PII e credenciais no S3." },
+  { d:"Security & Compliance", c:"#E63946", q:"Uma auditoria precisa saber quem deletou um bucket S3 na semana passada. Qual serviço fornece isso?", o:["Amazon CloudWatch","AWS CloudTrail","AWS Config","AWS Artifact"], a:1, e:"CloudTrail registra todas as chamadas de API: quem, quando e de onde." },
+  { d:"Security & Compliance", c:"#E63946", q:"Onde obter relatórios de conformidade da AWS (SOC, ISO, PCI-DSS)?", o:["AWS Config","AWS Artifact","AWS CloudTrail","AWS Trusted Advisor"], a:1, e:"AWS Artifact é o portal de relatórios de conformidade sob demanda." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço gerencia chaves de criptografia para dados em repouso?", o:["AWS ACM","AWS KMS","AWS IAM","AWS Secrets Manager"], a:1, e:"KMS (Key Management Service) cria e gerencia chaves de criptografia." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual prática a AWS recomenda para a conta root?", o:["Usá-la para tarefas diárias","Ativar MFA e usá-la o mínimo possível","Compartilhar com a equipe","Desativar completamente"], a:1, e:"A conta root deve ter MFA ativado e ser usada apenas quando estritamente necessário." },
+
+  { d:"Technology & Services", c:"#2A9D8F", q:"Código que processa imagens enviadas ao S3, sem gerenciar servidores, pagando por execução. Qual serviço?", o:["Amazon EC2","AWS Lambda","Amazon ECS","Elastic Beanstalk"], a:1, e:"Lambda é serverless, ideal para execução por evento sem provisionar servidores." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Múltiplas instâncias EC2 precisam acessar o mesmo sistema de arquivos simultaneamente. Qual usar?", o:["Amazon S3","Amazon EBS","Amazon EFS","Amazon Glacier"], a:2, e:"EFS é um file system NFS compartilhável entre várias instâncias. EBS é vinculado a uma só." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Banco NoSQL serverless com latência de milissegundos e escala massiva. Qual serviço?", o:["Amazon RDS","Amazon Redshift","Amazon DynamoDB","Amazon ElastiCache"], a:2, e:"DynamoDB é o NoSQL serverless da AWS para alta escala e baixa latência." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Conexão de rede privada e dedicada entre data center e AWS, com baixa latência. Qual serviço?", o:["AWS VPN","AWS Direct Connect","Amazon CloudFront","Amazon Route 53"], a:1, e:"Direct Connect é uma conexão física dedicada, mais estável que VPN." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Consultar dados no S3 usando SQL sem mover os dados. Qual serviço?", o:["Amazon Athena","Amazon Redshift","AWS Glue","Amazon RDS"], a:0, e:"Athena permite consulta SQL serverless direto no S3." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Enviar notificações por email, SMS e acionar Lambda simultaneamente. Qual serviço?", o:["Amazon SQS","Amazon SNS","AWS Step Functions","Amazon EventBridge"], a:1, e:"SNS (pub/sub) entrega uma mensagem a múltiplos assinantes de uma vez." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço desacopla componentes usando uma fila onde cada mensagem é processada por um consumidor?", o:["Amazon SNS","Amazon SQS","Amazon CloudFront","AWS Lambda"], a:1, e:"SQS é fila de mensagens: um produtor, um consumidor por mensagem." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Criar alarme quando a CPU de uma EC2 ultrapassar 80%. Qual serviço?", o:["Amazon CloudWatch","AWS CloudTrail","AWS Trusted Advisor","AWS Config"], a:0, e:"CloudWatch coleta métricas e permite criar alarmes por threshold." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço provisiona infraestrutura via código (templates YAML/JSON)?", o:["AWS CloudFormation","AWS Systems Manager","AWS Config","AWS OpsWorks"], a:0, e:"CloudFormation é Infrastructure as Code na AWS." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço dá recomendações em custo, performance, segurança, tolerância a falhas e limites?", o:["Amazon CloudWatch","AWS Trusted Advisor","AWS Config","AWS Inspector"], a:1, e:"Trusted Advisor oferece recomendações automáticas nas 5 categorias citadas." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"CDN global para entregar conteúdo com baixa latência via edge locations. Qual serviço?", o:["Amazon Route 53","Amazon CloudFront","AWS Global Accelerator","Amazon VPC"], a:1, e:"CloudFront é a CDN da AWS, com cache em edge locations globais." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Serviço de DNS gerenciado da AWS com health checks e roteamento. Qual?", o:["Amazon CloudFront","Amazon Route 53","AWS Direct Connect","Amazon VPC"], a:1, e:"Route 53 é o serviço de DNS gerenciado da AWS." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Análise de imagens e vídeos com IA (detecção de rostos e objetos). Qual serviço?", o:["Amazon Comprehend","Amazon Rekognition","Amazon Lex","Amazon Polly"], a:1, e:"Rekognition faz análise de imagem e vídeo com IA." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Data warehouse para análise de grandes volumes de dados (OLAP). Qual serviço?", o:["Amazon RDS","Amazon DynamoDB","Amazon Redshift","Amazon Aurora"], a:2, e:"Redshift é o data warehouse da AWS, otimizado para análise (OLAP)." },
+
+  { d:"Billing & Pricing", c:"#F4A261", q:"Workload que pode ser interrompida a qualquer momento e quer o maior desconto. Qual modelo EC2?", o:["On-Demand","Reserved Instances","Spot Instances","Dedicated Hosts"], a:2, e:"Spot oferece até 90% de desconto, mas pode ser interrompido com 2 min de aviso." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Receber alerta por email quando o gasto ultrapassar $1.000 no mês. Qual serviço?", o:["AWS Cost Explorer","AWS Budgets","Cost & Usage Report","Pricing Calculator"], a:1, e:"AWS Budgets define limites de gasto e dispara alertas." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Empresa com missão crítica precisa de TAM dedicado e resposta em 15 min. Qual plano de suporte?", o:["Business","Enterprise On-Ramp","Enterprise","Developer"], a:2, e:"Apenas o Enterprise oferece TAM dedicado e resposta de 15 min para sistema crítico." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Conta criada há 13 meses, EC2 t2.micro começou a ser cobrado. Por quê?", o:["Era Always Free","Os 12 meses gratuitos expiraram","Nunca foi gratuito","Excedeu limite de regiões"], a:1, e:"t2.micro faz parte do Free Tier de 12 meses, que expirou após o primeiro ano." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"5 contas AWS querem uma fatura única e desconto pelo uso combinado. Qual recurso?", o:["Cost Explorer","AWS Budgets","Cobrança consolidada (Organizations)","Pricing Calculator"], a:2, e:"Cobrança consolidada unifica faturas e agrega uso para descontos por volume." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual modelo de preço oferece flexibilidade comprometendo-se com um valor em $/hora por 1-3 anos?", o:["Reserved Instances","Savings Plans","Spot Instances","On-Demand"], a:1, e:"Savings Plans comprometem gasto em $/hora, mais flexível que Reserved Instances." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual ferramenta estima custos ANTES de usar os serviços, para planejamento?", o:["Cost Explorer","AWS Budgets","AWS Pricing Calculator","Cost & Usage Report"], a:2, e:"Pricing Calculator estima custos para planejamento e propostas." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual plano de suporte é gratuito e inclui Trusted Advisor com 7 verificações?", o:["Basic","Developer","Business","Enterprise"], a:0, e:"O plano Basic é gratuito e inclui as 7 verificações principais do Trusted Advisor." }
+];
+
+let simState = null;
+let simTimer = null;
+
+function initSimUI() {
+  document.getElementById('sim-qcount').textContent = QUESTOES.length;
+  const mins = Math.round(QUESTOES.length * (90/65));
+  document.getElementById('sim-time').textContent = mins;
+  const last = localStorage.getItem('awsclf_last_score');
+  const box = document.getElementById('sim-last-score');
+  if (last) {
+    const d = JSON.parse(last);
+    box.innerHTML = 'Última tentativa: <strong>' + d.score + '/1000</strong> (' + d.correct + '/' + d.total + ' acertos · ' + d.date + ')';
+  }
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startSim() {
+  const questions = shuffle(QUESTOES);
+  const totalSeconds = Math.round(QUESTOES.length * (90/65)) * 60;
+  simState = { questions, idx: 0, answers: new Array(questions.length).fill(null), secondsLeft: totalSeconds };
+  document.getElementById('sim-start').style.display = 'none';
+  document.getElementById('sim-result').style.display = 'none';
+  document.getElementById('sim-running').style.display = 'block';
+  document.getElementById('sim-total').textContent = questions.length;
+  renderSimQuestion();
+  startTimer();
+  window.scrollTo(0,0);
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  simTimer = setInterval(() => {
+    simState.secondsLeft--;
+    updateTimerDisplay();
+    if (simState.secondsLeft <= 0) { clearInterval(simTimer); finishSim(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const s = simState.secondsLeft;
+  const m = Math.floor(s / 60), sec = s % 60;
+  const el = document.getElementById('sim-timer');
+  el.textContent = m + ':' + String(sec).padStart(2,'0');
+  el.classList.remove('warning','danger');
+  if (s <= 60) el.classList.add('danger');
+  else if (s <= 300) el.classList.add('warning');
+}
+
+function renderSimQuestion() {
+  const q = simState.questions[simState.idx];
+  const sel = simState.answers[simState.idx];
+  let html = '<div class="sim-question">';
+  html += '<div class="sim-q-domain" style="color:' + q.c + '">' + q.d + '</div>';
+  html += '<div class="sim-q-text">' + q.q + '</div>';
+  q.o.forEach((opt, i) => {
+    const cls = sel === i ? 'sim-option selected' : 'sim-option';
+    html += '<button class="' + cls + '" onclick="selectSim(' + i + ')">' + String.fromCharCode(65+i) + ') ' + opt + '</button>';
+  });
+  html += '</div>';
+  document.getElementById('sim-question-area').innerHTML = html;
+  document.getElementById('sim-current').textContent = simState.idx + 1;
+  document.getElementById('sim-progress-fill').style.width = ((simState.idx+1)/simState.questions.length*100) + '%';
+  document.getElementById('sim-prev').disabled = simState.idx === 0;
+  const next = document.getElementById('sim-next');
+  if (simState.idx === simState.questions.length - 1) {
+    next.textContent = 'Finalizar ✓';
+    next.classList.add('finish');
+  } else {
+    next.textContent = 'Próxima →';
+    next.classList.remove('finish');
+  }
+}
+
+function selectSim(i) {
+  simState.answers[simState.idx] = i;
+  renderSimQuestion();
+}
+
+function navSim(dir) {
+  if (dir === 1 && simState.idx === simState.questions.length - 1) { confirmFinish(); return; }
+  simState.idx = Math.max(0, Math.min(simState.questions.length - 1, simState.idx + dir));
+  renderSimQuestion();
+  window.scrollTo(0,0);
+}
+
+function confirmFinish() {
+  const answered = simState.answers.filter(a => a !== null).length;
+  const unanswered = simState.questions.length - answered;
+  let msg = 'Finalizar o simulado?';
+  if (unanswered > 0) msg += '\n\nVocê deixou ' + unanswered + ' questão(ões) sem responder (serão contadas como erro).';
+  if (confirm(msg)) finishSim();
+}
+
+function finishSim() {
+  clearInterval(simTimer);
+  let correct = 0;
+  simState.questions.forEach((q, i) => { if (simState.answers[i] === q.a) correct++; });
+  const total = simState.questions.length;
+  const score = Math.round((correct / total) * 1000);
+  const passed = score >= 700;
+  const date = new Date().toLocaleDateString('pt-BR');
+  try { localStorage.setItem('awsclf_last_score', JSON.stringify({ score, correct, total, date })); } catch(e) {}
+
+  let html = '<div class="sim-result">';
+  html += '<div class="sim-score-circle ' + (passed?'pass':'fail') + '">';
+  html += '<div class="sim-score-num">' + score + '</div><div class="sim-score-label">de 1000</div></div>';
+  html += '<div class="sim-verdict ' + (passed?'pass':'fail') + '">' + (passed ? '✓ Aprovado!' : '✗ Abaixo da nota') + '</div>';
+  html += '<div class="sim-result-detail">Você acertou <strong>' + correct + ' de ' + total + '</strong> questões (' + Math.round(correct/total*100) + '%).<br>' + (passed ? 'Nota de corte da prova real é 700. Continue revisando os erros abaixo.' : 'Faltam ' + (700-score) + ' pontos. Revise os erros abaixo e refaça o simulado.') + '</div>';
+  html += '<div style="margin-bottom:24px"><button class="sim-btn" onclick="resetSim()">↻ Refazer simulado</button></div>';
+
+  // revisão dos erros
+  const erros = simState.questions.map((q,i) => ({q,i})).filter(({q,i}) => simState.answers[i] !== q.a);
+  if (erros.length) {
+    html += '<div class="section-label" style="text-align:left;margin-bottom:12px">Revisão dos erros (' + erros.length + ')</div>';
+    erros.forEach(({q,i}) => {
+      const yourAns = simState.answers[i];
+      html += '<div class="sim-review-item">';
+      html += '<div class="sim-q-domain" style="color:' + q.c + ';margin-bottom:6px">' + q.d + '</div>';
+      html += '<div class="sim-review-q">' + q.q + '</div>';
+      if (yourAns !== null) html += '<div class="sim-review-ans your-wrong">✗ Sua resposta: ' + String.fromCharCode(65+yourAns) + ') ' + q.o[yourAns] + '</div>';
+      else html += '<div class="sim-review-ans your-wrong">✗ Não respondida</div>';
+      html += '<div class="sim-review-ans correct-ans">✓ Correta: ' + String.fromCharCode(65+q.a) + ') ' + q.o[q.a] + '</div>';
+      html += '<div class="sim-review-exp">💡 ' + q.e + '</div>';
+      html += '</div>';
+    });
+  } else {
+    html += '<div class="sim-result-detail" style="color:#2A9D8F">🎉 Você acertou todas! Excelente domínio do conteúdo.</div>';
+  }
+  html += '</div>';
+
+  document.getElementById('sim-running').style.display = 'none';
+  document.getElementById('sim-result').style.display = 'block';
+  document.getElementById('sim-result').innerHTML = html;
+  window.scrollTo(0,0);
+}
+
+function resetSim() {
+  document.getElementById('sim-result').style.display = 'none';
+  document.getElementById('sim-start').style.display = 'block';
+  initSimUI();
+  window.scrollTo(0,0);
+}
+
+// ─── INICIALIZAÇÃO ───────────────────────────────────────────────
+restoreChecks();
+initSimUI();
+</script>
+</body>
+</html>
