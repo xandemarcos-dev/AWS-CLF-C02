@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -94,6 +95,58 @@
   .method-box ol { padding-left: 18px; color: #A8B2D8; font-size: 13px; line-height: 2.2; }
   .method-box li strong { color: #CCD6F6; }
 
+  /* SIMULADO */
+  .sim-intro { background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(42,157,143,0.08)); border: 1px solid rgba(108,99,255,0.3); border-radius: 12px; padding: 24px; text-align: center; }
+  .sim-intro h2 { font-size: 22px; color: #CCD6F6; margin-bottom: 8px; }
+  .sim-intro p { font-size: 14px; color: #A8B2D8; line-height: 1.7; margin-bottom: 6px; }
+  .sim-specs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 18px 0; }
+  .sim-spec { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 16px; font-size: 13px; color: #CCD6F6; }
+  .sim-spec strong { color: #6C63FF; display: block; font-size: 18px; margin-bottom: 2px; }
+  .sim-btn { background: linear-gradient(135deg, #6C63FF, #2A9D8F); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s; }
+  .sim-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.4); }
+  .sim-btn-secondary { background: rgba(255,255,255,0.08); margin-left: 10px; }
+  .sim-last-score { margin-top: 16px; font-size: 13px; color: #8892B0; }
+  .sim-last-score strong { color: #2A9D8F; }
+
+  .sim-topbar { position: sticky; top: 0; background: #0F1628; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; z-index: 5; }
+  .sim-counter { font-size: 14px; color: #CCD6F6; font-weight: 600; }
+  .sim-timer { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 4px 14px; border-radius: 8px; background: rgba(108,99,255,0.15); color: #6C63FF; }
+  .sim-timer.warning { background: rgba(244,162,97,0.15); color: #F4A261; }
+  .sim-timer.danger { background: rgba(230,57,70,0.15); color: #E63946; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+  .sim-progress-bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+  .sim-progress-fill { height: 100%; background: linear-gradient(90deg,#6C63FF,#2A9D8F); width: 0%; transition: width 0.3s; }
+
+  .sim-question { background: #1A1F35; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px; margin-bottom: 16px; }
+  .sim-q-domain { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .sim-q-text { font-size: 15px; color: #CCD6F6; line-height: 1.7; margin-bottom: 18px; font-weight: 500; }
+  .sim-option { display: block; width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 16px; text-align: left; color: #A8B2D8; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; margin-bottom: 8px; }
+  .sim-option:hover { background: rgba(108,99,255,0.12); border-color: rgba(108,99,255,0.4); }
+  .sim-option.selected { background: rgba(108,99,255,0.2); border-color: #6C63FF; color: #CCD6F6; }
+  .sim-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+  .sim-nav-btn { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: #CCD6F6; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .sim-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+  .sim-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .sim-nav-btn.finish { background: linear-gradient(135deg,#2A9D8F,#6C63FF); border: none; }
+
+  .sim-result { text-align: center; padding: 20px 0; }
+  .sim-score-circle { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 8px solid; }
+  .sim-score-circle.pass { border-color: #2A9D8F; background: rgba(42,157,143,0.1); }
+  .sim-score-circle.fail { border-color: #E63946; background: rgba(230,57,70,0.1); }
+  .sim-score-num { font-size: 42px; font-weight: 800; color: #CCD6F6; }
+  .sim-score-label { font-size: 12px; color: #8892B0; text-transform: uppercase; letter-spacing: 1px; }
+  .sim-verdict { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .sim-verdict.pass { color: #2A9D8F; }
+  .sim-verdict.fail { color: #E63946; }
+  .sim-result-detail { font-size: 14px; color: #A8B2D8; margin-bottom: 24px; line-height: 1.7; }
+  .sim-review-item { background: #1A1F35; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; margin-bottom: 12px; text-align: left; }
+  .sim-review-q { font-size: 14px; color: #CCD6F6; font-weight: 500; margin-bottom: 10px; }
+  .sim-review-ans { font-size: 13px; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; }
+  .sim-review-ans.your-wrong { background: rgba(230,57,70,0.12); color: #E8A0A8; }
+  .sim-review-ans.your-right { background: rgba(42,157,143,0.12); color: #9FD9CF; }
+  .sim-review-ans.correct-ans { background: rgba(42,157,143,0.12); color: #9FD9CF; }
+  .sim-review-exp { font-size: 12px; color: #8892B0; line-height: 1.6; margin-top: 6px; }
+
   /* MODAL */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 16px; }
   .modal-overlay.open { display: flex; }
@@ -160,6 +213,7 @@
   <div class="tabs-inner">
     <button class="tab-btn active" onclick="switchTab('cronograma',this)">📅 Plano</button>
     <button class="tab-btn" onclick="switchTab('dominios',this)">📚 Domínios</button>
+    <button class="tab-btn" onclick="switchTab('simulado',this)">🎯 Simulado</button>
     <button class="tab-btn" onclick="switchTab('armadilhas',this)">⚠️ Pegadinhas</button>
     <button class="tab-btn" onclick="switchTab('recursos',this)">🔗 Recursos</button>
   </div>
@@ -428,6 +482,47 @@
     <div class="resource-card"><div class="resource-header"><div class="resource-name">AWS Free Tier</div><div class="resource-tags"><span class="tag tag-recomendado">RECOMENDADO</span><span class="tag tag-tipo">Gratuito</span></div></div><div class="resource-desc">Crie uma conta e pratique no console real</div><a href="https://aws.amazon.com/free/" target="_blank">🔗 aws.amazon.com/free/</a></div>
     <div class="resource-card"><div class="resource-header"><div class="resource-name">Whizlabs / Udemy</div><div class="resource-tags"><span class="tag tag-opcional">OPCIONAL</span><span class="tag tag-tipo">Pago (~R$30)</span></div></div><div class="resource-desc">6 simulados completos de 65 questões cada</div><a href="https://www.udemy.com" target="_blank">🔗 udemy.com</a></div>
     <div class="method-box"><div class="method-title">💡 Método recomendado</div><ol><li>Leia o tópico no Skill Builder (30-40 min)</li><li>Faça <strong>anotações com suas próprias palavras</strong></li><li>Responda 10 questões do ExamTopics sobre o tema</li><li>Revise os erros — entenda <em>por que</em> a certa é certa</li><li>A partir do dia 10: 1 simulado de 65 questões a cada 2 dias</li></ol></div>
+  </div>
+
+  <!-- SIMULADO -->
+  <div class="tab-panel" id="tab-simulado">
+    <!-- TELA INICIAL -->
+    <div id="sim-start">
+      <div class="sim-intro">
+        <h2>🎯 Simulado Cronometrado</h2>
+        <p>Treine no formato exato da prova real. Questões embaralhadas, tempo proporcional e nota final no padrão AWS.</p>
+        <div class="sim-specs">
+          <div class="sim-spec"><strong id="sim-qcount">—</strong>questões</div>
+          <div class="sim-spec"><strong id="sim-time">—</strong>minutos</div>
+          <div class="sim-spec"><strong>700</strong>nota p/ passar</div>
+        </div>
+        <p style="font-size:13px;color:#8892B0">A prova oficial tem 65 questões em 90 min. Este simulado usa o banco disponível, mantendo a proporção de tempo.</p>
+        <div style="margin-top:20px">
+          <button class="sim-btn" onclick="startSim()">▶ Iniciar simulado</button>
+        </div>
+        <div class="sim-last-score" id="sim-last-score"></div>
+      </div>
+    </div>
+
+    <!-- TELA DE QUESTÕES -->
+    <div id="sim-running" style="display:none">
+      <div class="sim-topbar">
+        <span class="sim-counter">Questão <span id="sim-current">1</span> de <span id="sim-total">0</span></span>
+        <span class="sim-timer" id="sim-timer">90:00</span>
+      </div>
+      <div class="sim-progress-bar"><div class="sim-progress-fill" id="sim-progress-fill"></div></div>
+      <div id="sim-question-area"></div>
+      <div class="sim-nav">
+        <button class="sim-nav-btn" id="sim-prev" onclick="navSim(-1)">← Anterior</button>
+        <button class="sim-nav-btn" id="sim-next" onclick="navSim(1)">Próxima →</button>
+      </div>
+      <div style="text-align:center;margin-top:14px">
+        <button class="sim-btn-secondary sim-btn" style="padding:10px 24px;font-size:13px" onclick="confirmFinish()">Finalizar agora</button>
+      </div>
+    </div>
+
+    <!-- TELA DE RESULTADO -->
+    <div id="sim-result" style="display:none"></div>
   </div>
 
 </div>
@@ -1236,6 +1331,19 @@ function toggleDomain(btn) {
   arrow.textContent = isOpen ? '▼' : '▲';
 }
 
+// índice estável de cada tópico para persistência
+function topicIndex(item) {
+  return Array.from(document.querySelectorAll('.topic-item')).indexOf(item);
+}
+
+function saveChecks() {
+  const done = [];
+  document.querySelectorAll('.topic-item').forEach((item, i) => {
+    if (item.classList.contains('done')) done.push(i);
+  });
+  try { localStorage.setItem('awsclf_checks', JSON.stringify(done)); } catch(e) {}
+}
+
 function toggleCheck(el, color) {
   const item = el.closest('.topic-item');
   const isDone = item.classList.contains('done');
@@ -1253,12 +1361,36 @@ function toggleCheck(el, color) {
     checkedCount++;
   }
   updateProgress();
+  saveChecks();
 }
 
 function updateProgress() {
   const pct = Math.round((checkedCount / TOTAL) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-text').textContent = checkedCount + '/' + TOTAL + ' (' + pct + '%)';
+}
+
+// restaura checkboxes salvos
+function restoreChecks() {
+  let done = [];
+  try { done = JSON.parse(localStorage.getItem('awsclf_checks') || '[]'); } catch(e) {}
+  if (!done.length) return;
+  const items = document.querySelectorAll('.topic-item');
+  done.forEach(i => {
+    const item = items[i];
+    if (!item) return;
+    const check = item.querySelector('.topic-check');
+    // descobre a cor pelo onclick
+    const onclickStr = check.getAttribute('onclick') || '';
+    const match = onclickStr.match(/'(#[0-9A-Fa-f]{6})'/);
+    const color = match ? match[1] : '#6C63FF';
+    item.classList.add('done');
+    check.style.background = color;
+    check.style.borderColor = color;
+    check.textContent = '✓';
+    checkedCount++;
+  });
+  updateProgress();
 }
 
 function openModal(id) {
@@ -1296,6 +1428,212 @@ function answer(btn, isCorrect, qid) {
   const exp = document.getElementById(qid);
   if (exp) exp.classList.add('show');
 }
+
+// ════════════════════════════════════════════════════════════════
+// SIMULADO CRONOMETRADO
+// ════════════════════════════════════════════════════════════════
+const QUESTOES = [
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Uma empresa quer eliminar gastos com data centers físicos e pagar apenas pelos recursos que consome. Qual benefício da nuvem representa isso?", o:["Alta disponibilidade","Troca de CapEx por OpEx (pay-as-you-go)","Escalabilidade vertical","Tolerância a falhas"], a:1, e:"Pay-as-you-go troca investimento de capital (CapEx) por gasto operacional (OpEx)." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Durante a Black Friday, um e-commerce precisa que a capacidade aumente e diminua automaticamente conforme a demanda. Qual conceito descreve isso?", o:["Agilidade","Elasticidade","Durabilidade","Disponibilidade"], a:1, e:"Elasticidade é escalar para cima E para baixo automaticamente conforme demanda." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Em RDS, de quem é a responsabilidade de aplicar patches no SO do banco de dados?", o:["Do cliente","Da AWS","Compartilhada igualmente","Do fornecedor do banco"], a:1, e:"RDS é gerenciado: a AWS cuida do SO e patches. O cliente cuida dos dados e acessos." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Qual item é SEMPRE responsabilidade do cliente no modelo de responsabilidade compartilhada?", o:["Segurança física dos data centers","Gerenciamento de permissões IAM","Manutenção do hypervisor","Infraestrutura de rede global"], a:1, e:"Gerenciamento de identidade e acesso (IAM) é sempre do cliente." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Uma empresa mantém parte dos dados em servidores locais e usa a AWS para processamento. Qual modelo de implantação é esse?", o:["Nuvem pública","Nuvem privada","Nuvem híbrida","Multi-cloud"], a:2, e:"Híbrida combina recursos on-premises e nuvem AWS." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Um desenvolvedor quer hospedar uma aplicação sem gerenciar servidores ou SO. Qual modelo de serviço atende melhor?", o:["IaaS (EC2)","PaaS (Elastic Beanstalk)","SaaS (WorkMail)","On-premises"], a:1, e:"PaaS permite focar na aplicação sem gerenciar a infraestrutura subjacente." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Reduzir custos com Reserved Instances e desligar recursos ociosos representa qual pilar do Well-Architected Framework?", o:["Confiabilidade","Segurança","Otimização de Custos","Eficiência de Performance"], a:2, e:"Otimização de Custos envolve evitar gastos desnecessários e usar modelos de preço eficientes." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"Quantos pilares tem o AWS Well-Architected Framework?", o:["4 pilares","5 pilares","6 pilares","7 pilares"], a:2, e:"São 6: Excelência Operacional, Segurança, Confiabilidade, Eficiência de Performance, Otimização de Custos e Sustentabilidade." },
+  { d:"Cloud Concepts", c:"#FF6B35", q:"O que diferencia Alta Disponibilidade (HA) de Tolerância a Falhas (FT)?", o:["São sinônimos","HA minimiza downtime; FT garante zero downtime","FT é mais barato que HA","HA só funciona em uma AZ"], a:1, e:"HA aceita breve interrupção; FT continua operando mesmo com falha total de componente." },
+
+  { d:"Security & Compliance", c:"#E63946", q:"Uma instância EC2 precisa acessar um bucket S3. Qual a forma mais segura?", o:["Criar usuário IAM com chave no código","Usar a conta root","Criar uma IAM Role e associar à instância","Tornar o bucket público"], a:2, e:"IAM Roles fornecem credenciais temporárias e rotacionadas automaticamente — a melhor prática." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual princípio recomenda conceder apenas as permissões mínimas necessárias?", o:["Defense in depth","Least privilege","Zero trust","Fail-safe"], a:1, e:"Least privilege (menor privilégio) é o princípio central do IAM." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual recurso impede que contas de uma organização criem recursos fora de certas regiões, independente do IAM?", o:["IAM Policy","Service Control Policy (SCP)","Security Group","Network ACL"], a:1, e:"SCPs definem o limite máximo de permissões a nível de conta no AWS Organizations." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço detecta atividades suspeitas analisando logs de CloudTrail, VPC Flow e DNS com machine learning?", o:["AWS Inspector","Amazon GuardDuty","AWS Shield","AWS WAF"], a:1, e:"GuardDuty é o serviço de detecção de ameaças baseado em ML." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço protege aplicações web contra SQL injection e XSS?", o:["AWS Shield","AWS WAF","Amazon Macie","Amazon Inspector"], a:1, e:"AWS WAF é o Web Application Firewall que filtra tráfego HTTP malicioso." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço protege especificamente contra ataques DDoS?", o:["AWS WAF","AWS Shield","Amazon GuardDuty","AWS Config"], a:1, e:"AWS Shield é a proteção contra DDoS (Standard gratuito, Advanced pago)." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço descobre e protege dados sensíveis (PII) armazenados no S3?", o:["Amazon Macie","Amazon Inspector","AWS Config","AWS Artifact"], a:0, e:"Macie usa ML para identificar dados sensíveis como PII e credenciais no S3." },
+  { d:"Security & Compliance", c:"#E63946", q:"Uma auditoria precisa saber quem deletou um bucket S3 na semana passada. Qual serviço fornece isso?", o:["Amazon CloudWatch","AWS CloudTrail","AWS Config","AWS Artifact"], a:1, e:"CloudTrail registra todas as chamadas de API: quem, quando e de onde." },
+  { d:"Security & Compliance", c:"#E63946", q:"Onde obter relatórios de conformidade da AWS (SOC, ISO, PCI-DSS)?", o:["AWS Config","AWS Artifact","AWS CloudTrail","AWS Trusted Advisor"], a:1, e:"AWS Artifact é o portal de relatórios de conformidade sob demanda." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual serviço gerencia chaves de criptografia para dados em repouso?", o:["AWS ACM","AWS KMS","AWS IAM","AWS Secrets Manager"], a:1, e:"KMS (Key Management Service) cria e gerencia chaves de criptografia." },
+  { d:"Security & Compliance", c:"#E63946", q:"Qual prática a AWS recomenda para a conta root?", o:["Usá-la para tarefas diárias","Ativar MFA e usá-la o mínimo possível","Compartilhar com a equipe","Desativar completamente"], a:1, e:"A conta root deve ter MFA ativado e ser usada apenas quando estritamente necessário." },
+
+  { d:"Technology & Services", c:"#2A9D8F", q:"Código que processa imagens enviadas ao S3, sem gerenciar servidores, pagando por execução. Qual serviço?", o:["Amazon EC2","AWS Lambda","Amazon ECS","Elastic Beanstalk"], a:1, e:"Lambda é serverless, ideal para execução por evento sem provisionar servidores." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Múltiplas instâncias EC2 precisam acessar o mesmo sistema de arquivos simultaneamente. Qual usar?", o:["Amazon S3","Amazon EBS","Amazon EFS","Amazon Glacier"], a:2, e:"EFS é um file system NFS compartilhável entre várias instâncias. EBS é vinculado a uma só." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Banco NoSQL serverless com latência de milissegundos e escala massiva. Qual serviço?", o:["Amazon RDS","Amazon Redshift","Amazon DynamoDB","Amazon ElastiCache"], a:2, e:"DynamoDB é o NoSQL serverless da AWS para alta escala e baixa latência." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Conexão de rede privada e dedicada entre data center e AWS, com baixa latência. Qual serviço?", o:["AWS VPN","AWS Direct Connect","Amazon CloudFront","Amazon Route 53"], a:1, e:"Direct Connect é uma conexão física dedicada, mais estável que VPN." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Consultar dados no S3 usando SQL sem mover os dados. Qual serviço?", o:["Amazon Athena","Amazon Redshift","AWS Glue","Amazon RDS"], a:0, e:"Athena permite consulta SQL serverless direto no S3." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Enviar notificações por email, SMS e acionar Lambda simultaneamente. Qual serviço?", o:["Amazon SQS","Amazon SNS","AWS Step Functions","Amazon EventBridge"], a:1, e:"SNS (pub/sub) entrega uma mensagem a múltiplos assinantes de uma vez." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço desacopla componentes usando uma fila onde cada mensagem é processada por um consumidor?", o:["Amazon SNS","Amazon SQS","Amazon CloudFront","AWS Lambda"], a:1, e:"SQS é fila de mensagens: um produtor, um consumidor por mensagem." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Criar alarme quando a CPU de uma EC2 ultrapassar 80%. Qual serviço?", o:["Amazon CloudWatch","AWS CloudTrail","AWS Trusted Advisor","AWS Config"], a:0, e:"CloudWatch coleta métricas e permite criar alarmes por threshold." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço provisiona infraestrutura via código (templates YAML/JSON)?", o:["AWS CloudFormation","AWS Systems Manager","AWS Config","AWS OpsWorks"], a:0, e:"CloudFormation é Infrastructure as Code na AWS." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Qual serviço dá recomendações em custo, performance, segurança, tolerância a falhas e limites?", o:["Amazon CloudWatch","AWS Trusted Advisor","AWS Config","AWS Inspector"], a:1, e:"Trusted Advisor oferece recomendações automáticas nas 5 categorias citadas." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"CDN global para entregar conteúdo com baixa latência via edge locations. Qual serviço?", o:["Amazon Route 53","Amazon CloudFront","AWS Global Accelerator","Amazon VPC"], a:1, e:"CloudFront é a CDN da AWS, com cache em edge locations globais." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Serviço de DNS gerenciado da AWS com health checks e roteamento. Qual?", o:["Amazon CloudFront","Amazon Route 53","AWS Direct Connect","Amazon VPC"], a:1, e:"Route 53 é o serviço de DNS gerenciado da AWS." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Análise de imagens e vídeos com IA (detecção de rostos e objetos). Qual serviço?", o:["Amazon Comprehend","Amazon Rekognition","Amazon Lex","Amazon Polly"], a:1, e:"Rekognition faz análise de imagem e vídeo com IA." },
+  { d:"Technology & Services", c:"#2A9D8F", q:"Data warehouse para análise de grandes volumes de dados (OLAP). Qual serviço?", o:["Amazon RDS","Amazon DynamoDB","Amazon Redshift","Amazon Aurora"], a:2, e:"Redshift é o data warehouse da AWS, otimizado para análise (OLAP)." },
+
+  { d:"Billing & Pricing", c:"#F4A261", q:"Workload que pode ser interrompida a qualquer momento e quer o maior desconto. Qual modelo EC2?", o:["On-Demand","Reserved Instances","Spot Instances","Dedicated Hosts"], a:2, e:"Spot oferece até 90% de desconto, mas pode ser interrompido com 2 min de aviso." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Receber alerta por email quando o gasto ultrapassar $1.000 no mês. Qual serviço?", o:["AWS Cost Explorer","AWS Budgets","Cost & Usage Report","Pricing Calculator"], a:1, e:"AWS Budgets define limites de gasto e dispara alertas." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Empresa com missão crítica precisa de TAM dedicado e resposta em 15 min. Qual plano de suporte?", o:["Business","Enterprise On-Ramp","Enterprise","Developer"], a:2, e:"Apenas o Enterprise oferece TAM dedicado e resposta de 15 min para sistema crítico." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Conta criada há 13 meses, EC2 t2.micro começou a ser cobrado. Por quê?", o:["Era Always Free","Os 12 meses gratuitos expiraram","Nunca foi gratuito","Excedeu limite de regiões"], a:1, e:"t2.micro faz parte do Free Tier de 12 meses, que expirou após o primeiro ano." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"5 contas AWS querem uma fatura única e desconto pelo uso combinado. Qual recurso?", o:["Cost Explorer","AWS Budgets","Cobrança consolidada (Organizations)","Pricing Calculator"], a:2, e:"Cobrança consolidada unifica faturas e agrega uso para descontos por volume." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual modelo de preço oferece flexibilidade comprometendo-se com um valor em $/hora por 1-3 anos?", o:["Reserved Instances","Savings Plans","Spot Instances","On-Demand"], a:1, e:"Savings Plans comprometem gasto em $/hora, mais flexível que Reserved Instances." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual ferramenta estima custos ANTES de usar os serviços, para planejamento?", o:["Cost Explorer","AWS Budgets","AWS Pricing Calculator","Cost & Usage Report"], a:2, e:"Pricing Calculator estima custos para planejamento e propostas." },
+  { d:"Billing & Pricing", c:"#F4A261", q:"Qual plano de suporte é gratuito e inclui Trusted Advisor com 7 verificações?", o:["Basic","Developer","Business","Enterprise"], a:0, e:"O plano Basic é gratuito e inclui as 7 verificações principais do Trusted Advisor." }
+];
+
+let simState = null;
+let simTimer = null;
+
+function initSimUI() {
+  document.getElementById('sim-qcount').textContent = QUESTOES.length;
+  const mins = Math.round(QUESTOES.length * (90/65));
+  document.getElementById('sim-time').textContent = mins;
+  const last = localStorage.getItem('awsclf_last_score');
+  const box = document.getElementById('sim-last-score');
+  if (last) {
+    const d = JSON.parse(last);
+    box.innerHTML = 'Última tentativa: <strong>' + d.score + '/1000</strong> (' + d.correct + '/' + d.total + ' acertos · ' + d.date + ')';
+  }
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startSim() {
+  const questions = shuffle(QUESTOES);
+  const totalSeconds = Math.round(QUESTOES.length * (90/65)) * 60;
+  simState = { questions, idx: 0, answers: new Array(questions.length).fill(null), secondsLeft: totalSeconds };
+  document.getElementById('sim-start').style.display = 'none';
+  document.getElementById('sim-result').style.display = 'none';
+  document.getElementById('sim-running').style.display = 'block';
+  document.getElementById('sim-total').textContent = questions.length;
+  renderSimQuestion();
+  startTimer();
+  window.scrollTo(0,0);
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  simTimer = setInterval(() => {
+    simState.secondsLeft--;
+    updateTimerDisplay();
+    if (simState.secondsLeft <= 0) { clearInterval(simTimer); finishSim(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const s = simState.secondsLeft;
+  const m = Math.floor(s / 60), sec = s % 60;
+  const el = document.getElementById('sim-timer');
+  el.textContent = m + ':' + String(sec).padStart(2,'0');
+  el.classList.remove('warning','danger');
+  if (s <= 60) el.classList.add('danger');
+  else if (s <= 300) el.classList.add('warning');
+}
+
+function renderSimQuestion() {
+  const q = simState.questions[simState.idx];
+  const sel = simState.answers[simState.idx];
+  let html = '<div class="sim-question">';
+  html += '<div class="sim-q-domain" style="color:' + q.c + '">' + q.d + '</div>';
+  html += '<div class="sim-q-text">' + q.q + '</div>';
+  q.o.forEach((opt, i) => {
+    const cls = sel === i ? 'sim-option selected' : 'sim-option';
+    html += '<button class="' + cls + '" onclick="selectSim(' + i + ')">' + String.fromCharCode(65+i) + ') ' + opt + '</button>';
+  });
+  html += '</div>';
+  document.getElementById('sim-question-area').innerHTML = html;
+  document.getElementById('sim-current').textContent = simState.idx + 1;
+  document.getElementById('sim-progress-fill').style.width = ((simState.idx+1)/simState.questions.length*100) + '%';
+  document.getElementById('sim-prev').disabled = simState.idx === 0;
+  const next = document.getElementById('sim-next');
+  if (simState.idx === simState.questions.length - 1) {
+    next.textContent = 'Finalizar ✓';
+    next.classList.add('finish');
+  } else {
+    next.textContent = 'Próxima →';
+    next.classList.remove('finish');
+  }
+}
+
+function selectSim(i) {
+  simState.answers[simState.idx] = i;
+  renderSimQuestion();
+}
+
+function navSim(dir) {
+  if (dir === 1 && simState.idx === simState.questions.length - 1) { confirmFinish(); return; }
+  simState.idx = Math.max(0, Math.min(simState.questions.length - 1, simState.idx + dir));
+  renderSimQuestion();
+  window.scrollTo(0,0);
+}
+
+function confirmFinish() {
+  const answered = simState.answers.filter(a => a !== null).length;
+  const unanswered = simState.questions.length - answered;
+  let msg = 'Finalizar o simulado?';
+  if (unanswered > 0) msg += '\n\nVocê deixou ' + unanswered + ' questão(ões) sem responder (serão contadas como erro).';
+  if (confirm(msg)) finishSim();
+}
+
+function finishSim() {
+  clearInterval(simTimer);
+  let correct = 0;
+  simState.questions.forEach((q, i) => { if (simState.answers[i] === q.a) correct++; });
+  const total = simState.questions.length;
+  const score = Math.round((correct / total) * 1000);
+  const passed = score >= 700;
+  const date = new Date().toLocaleDateString('pt-BR');
+  try { localStorage.setItem('awsclf_last_score', JSON.stringify({ score, correct, total, date })); } catch(e) {}
+
+  let html = '<div class="sim-result">';
+  html += '<div class="sim-score-circle ' + (passed?'pass':'fail') + '">';
+  html += '<div class="sim-score-num">' + score + '</div><div class="sim-score-label">de 1000</div></div>';
+  html += '<div class="sim-verdict ' + (passed?'pass':'fail') + '">' + (passed ? '✓ Aprovado!' : '✗ Abaixo da nota') + '</div>';
+  html += '<div class="sim-result-detail">Você acertou <strong>' + correct + ' de ' + total + '</strong> questões (' + Math.round(correct/total*100) + '%).<br>' + (passed ? 'Nota de corte da prova real é 700. Continue revisando os erros abaixo.' : 'Faltam ' + (700-score) + ' pontos. Revise os erros abaixo e refaça o simulado.') + '</div>';
+  html += '<div style="margin-bottom:24px"><button class="sim-btn" onclick="resetSim()">↻ Refazer simulado</button></div>';
+
+  // revisão dos erros
+  const erros = simState.questions.map((q,i) => ({q,i})).filter(({q,i}) => simState.answers[i] !== q.a);
+  if (erros.length) {
+    html += '<div class="section-label" style="text-align:left;margin-bottom:12px">Revisão dos erros (' + erros.length + ')</div>';
+    erros.forEach(({q,i}) => {
+      const yourAns = simState.answers[i];
+      html += '<div class="sim-review-item">';
+      html += '<div class="sim-q-domain" style="color:' + q.c + ';margin-bottom:6px">' + q.d + '</div>';
+      html += '<div class="sim-review-q">' + q.q + '</div>';
+      if (yourAns !== null) html += '<div class="sim-review-ans your-wrong">✗ Sua resposta: ' + String.fromCharCode(65+yourAns) + ') ' + q.o[yourAns] + '</div>';
+      else html += '<div class="sim-review-ans your-wrong">✗ Não respondida</div>';
+      html += '<div class="sim-review-ans correct-ans">✓ Correta: ' + String.fromCharCode(65+q.a) + ') ' + q.o[q.a] + '</div>';
+      html += '<div class="sim-review-exp">💡 ' + q.e + '</div>';
+      html += '</div>';
+    });
+  } else {
+    html += '<div class="sim-result-detail" style="color:#2A9D8F">🎉 Você acertou todas! Excelente domínio do conteúdo.</div>';
+  }
+  html += '</div>';
+
+  document.getElementById('sim-running').style.display = 'none';
+  document.getElementById('sim-result').style.display = 'block';
+  document.getElementById('sim-result').innerHTML = html;
+  window.scrollTo(0,0);
+}
+
+function resetSim() {
+  document.getElementById('sim-result').style.display = 'none';
+  document.getElementById('sim-start').style.display = 'block';
+  initSimUI();
+  window.scrollTo(0,0);
+}
+
+// ─── INICIALIZAÇÃO ───────────────────────────────────────────────
+restoreChecks();
+initSimUI();
 </script>
 </body>
 </html>
