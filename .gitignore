@@ -1,0 +1,12 @@
+# Mídias pessoais
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.docx
+
+# Obsidian local settings
+AWS-Second-Brain/.obsidian/workspace.json
+
+# Claude local config
+.claude/
