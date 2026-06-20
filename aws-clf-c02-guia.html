@@ -228,8 +228,6 @@
   .detail-block .trap { background: rgba(230,57,70,0.08); border-left: 3px solid #E63946; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px; color: var(--text-muted); }
   .detail-block .trap strong { color: #E63946; }
 
-  
-
   /* TABLE in detail */
   .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 12px 0; }
   .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -491,7 +489,7 @@
                 <tr><td>Segurança física do DC</td><td><strong>AWS</strong></td><td>Infraestrutura física é sempre AWS</td></tr>
                 <tr><td>Configurar Security Groups</td><td><strong>Cliente</strong></td><td>Firewall da instância = configuração do cliente</td></tr>
               </table></div>
-              
+            </div>
           </div>
         </div>
 
@@ -589,7 +587,7 @@
                 <tr><td><strong>Sustentabilidade</strong></td><td>Minimizar impacto ambiental</td><td>eficiência energética, menor footprint</td></tr>
               </table></div>
               <div class="trap"><strong>Cuidado:</strong> Escalabilidade e Disponibilidade NÃO são pilares. São propriedades do pilar Confiabilidade.</div>
-              
+            </div>
           </div>
         </div>
 
@@ -645,7 +643,7 @@
               <p>Conceder apenas as permissões mínimas necessárias para a tarefa. Se um usuário precisa ler S3, ele não deve ter permissão de deletar EC2.</p>
               <div class="highlight"><strong>IAM é gratuito e global</strong> — não é por região. As políticas criadas valem para toda a conta.</div>
               <div class="trap"><strong>Roles vs Users:</strong> a prova frequentemente pergunta "qual é a forma correta de dar acesso ao EC2 para acessar o S3?". Sempre Roles, nunca embutir credenciais de usuário no servidor.</div>
-              
+            </div>
           </div>
         </div>
 
@@ -680,7 +678,7 @@
                 <li>Benefício imediato: economias de escala internas</li>
               </ul>
               <div class="highlight"><strong>Na prova:</strong> "empresa quer garantir que nenhuma conta-membro possa criar recursos em determinada região" → SCP</div>
-              
+            </div>
           </div>
         </div>
 
@@ -718,7 +716,7 @@
                 <li><strong>KMS</strong> — gerenciado pela AWS, mais simples, mais barato. A AWS tem acesso às chaves. Para maioria dos casos.</li>
                 <li><strong>CloudHSM</strong> — hardware físico dedicado, você controla as chaves, a AWS não tem acesso. Para regulações rigorosas (PCI, FIPS).</li>
               </ul>
-              
+            </div>
           </div>
         </div>
 
@@ -750,7 +748,7 @@
                 <li><strong>Config</strong> = <em>como estava o recurso</em> — "o bucket ficou com acesso público por 3 dias"</li>
               </ul>
               <div class="highlight"><strong>CloudTrail está habilitado por padrão</strong> para os últimos 90 dias de atividade de gerenciamento. Para retenção maior, você cria um trail que grava em S3.</div>
-              
+            </div>
           </div>
         </div>
 
@@ -824,7 +822,7 @@
                 <tr><td><strong>Elastic Beanstalk</strong></td><td>Deploy de aplicações sem gerenciar infraestrutura (PaaS). Você sobe o código.</td><td>Deploy rápido sem ops</td></tr>
                 <tr><td><strong>Lightsail</strong></td><td>VPS simplificado para quem não quer complexidade da AWS</td><td>Sites pequenos, startups simples</td></tr>
               </table></div>
-              
+            </div>
           </div>
         </div>
 
@@ -858,7 +856,7 @@
                 <li><strong>S3 Glacier / Glacier Deep Archive</strong> — arquivamento longo prazo, horas para recuperar, muito barato</li>
               </ul>
               <div class="trap"><strong>S3 não é sistema de arquivos</strong> — é object storage. Não serve para montar como disco de um servidor.</div>
-              
+            </div>
           </div>
         </div>
 
@@ -886,7 +884,7 @@
                 <tr><td><strong>Redshift</strong></td><td>Data warehouse — analítico, petabytes de dados</td><td>BI, relatórios, analytics em grandes volumes</td></tr>
               </table></div>
               <div class="highlight"><strong>RDS vs DynamoDB na prova:</strong> dados relacionais com joins e transações → RDS. Alta escala, flexibilidade de schema, serverless → DynamoDB.</div>
-              
+            </div>
           </div>
         </div>
 
@@ -915,7 +913,7 @@
                 <tr><td><strong>Site-to-Site VPN</strong></td><td>Conexão criptografada via internet entre sua rede on-premises e a VPC.</td></tr>
               </table></div>
               <div class="highlight"><strong>Direct Connect vs VPN:</strong> VPN = internet pública criptografada (mais rápido de configurar, menor custo). Direct Connect = linha dedicada física (mais estável, sem internet pública, mais caro).</div>
-              
+            </div>
           </div>
         </div>
 
@@ -998,7 +996,7 @@
                 <tr><td><strong>Trusted Advisor</strong></td><td>Recomendações automáticas em 5 categorias: custo, performance, segurança, tolerância a falhas, limites de serviço</td><td>recomendações, best practices, otimização</td></tr>
               </table></div>
               <div class="trap"><strong>CloudWatch vs CloudTrail:</strong> CloudWatch = métricas e performance (CPU alta, erro 500). CloudTrail = auditoria de ações (quem deletou, quem modificou).</div>
-              
+            </div>
           </div>
         </div>
 
@@ -1069,7 +1067,7 @@
                 <tr><td><strong>Cost &amp; Usage Report</strong></td><td>Relatório detalhado de todos os custos — granularidade de recurso por recurso</td><td>"Relatório detalhado de custo para análise em BI"</td></tr>
                 <tr><td><strong>Pricing Calculator</strong></td><td>Estima o custo de uma arquitetura AWS antes de criá-la</td><td>"Estimar custo antes de migrar para a AWS"</td></tr>
               </table></div>
-              
+            </div>
           </div>
         </div>
 
